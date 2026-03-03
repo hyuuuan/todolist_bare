@@ -77,6 +77,8 @@ public partial class MainPage : ContentPage
             detailsEditor.Text = item.detail;
             SetEditMode(true);
         }
+        // Clear the selection immediately so iOS doesn't show the checkmark
+        todoLV.SelectedItem = null;
     }
 
     private void todoLV_ItemTapped(object? sender, ItemTappedEventArgs e)

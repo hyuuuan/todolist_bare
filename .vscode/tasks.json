@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build-ios",
+            "type": "shell",
+            "command": "dotnet build -t:Run -f net10.0-ios ToDoMaui_Listview.csproj -p:_DeviceName=:v2:udid=48959757-21D4-4C39-B092-FBAB79466E7E",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}

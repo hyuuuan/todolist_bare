@@ -28,18 +28,20 @@
     <Color x:Key="Gray950">#141414</Color>
 
     <!-- App palette -->
-    <Color x:Key="AppBg">#F0F0F8</Color>
+    <Color x:Key="AppBg">#FFFFFF</Color>
     <Color x:Key="CardBg">#FFFFFF</Color>
-    <Color x:Key="CardBorder">#E8E6F4</Color>
-    <Color x:Key="InputPanelBg">#1E1E3A</Color>
-    <Color x:Key="InputBg">#F8F7FF</Color>
-    <Color x:Key="InputBorder">#D4D0EC</Color>
-    <Color x:Key="AccentPrimary">#7C3AED</Color>
-    <Color x:Key="AccentEdit">#F59E0B</Color>
-    <Color x:Key="AccentDanger">#F43F5E</Color>
-    <Color x:Key="TextPrimary">#1C1B33</Color>
-    <Color x:Key="TextSecondary">#6B7280</Color>
+    <Color x:Key="CardBorder">#F0F0F0</Color>
+    <Color x:Key="InputPanelBg">#FFFFFF</Color>
+    <Color x:Key="InputBg">#F5F5F5</Color>
+    <Color x:Key="InputBorder">#EBEBEB</Color>
+    <Color x:Key="AccentPrimary">#FF6200</Color>
+    <Color x:Key="AccentLight">#FFF0E8</Color>
+    <Color x:Key="AccentEdit">#FF6200</Color>
+    <Color x:Key="AccentDanger">#E53935</Color>
+    <Color x:Key="TextPrimary">#1A1A1A</Color>
+    <Color x:Key="TextSecondary">#9E9E9E</Color>
     <Color x:Key="TextOnDark">#FFFFFF</Color>
+    <Color x:Key="Divider">#F0F0F0</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>

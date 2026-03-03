@@ -9,27 +9,27 @@
 
         <!-- ── Input Panel ── -->
         <VerticalStackLayout Grid.Row="0"
-                             Padding="16,20,16,16"
+                             Padding="20,20,20,16"
                              Spacing="12"
                              BackgroundColor="{StaticResource InputPanelBg}">
 
             <Label Text="NEW TASK"
                    FontSize="11" FontAttributes="Bold" CharacterSpacing="1.5"
-                   TextColor="{StaticResource TextOnDark}" Opacity="0.55"/>
+                   TextColor="{StaticResource AccentPrimary}"/>
 
             <!-- Title -->
             <Border BackgroundColor="{StaticResource InputBg}"
                     Stroke="{StaticResource InputBorder}"
                     StrokeShape="RoundRectangle 10"
                     StrokeThickness="1"
-                    Padding="12,0">
+                    Padding="14,0">
                 <Entry x:Name="titleEntry"
-                       Placeholder="Title"
+                       Placeholder="Task title"
                        PlaceholderColor="{StaticResource TextSecondary}"
                        TextColor="{StaticResource TextPrimary}"
                        BackgroundColor="Transparent"
                        Keyboard="Text" ReturnType="Next" MaxLength="50"
-                       HeightRequest="44"/>
+                       HeightRequest="46"/>
             </Border>
 
             <!-- Details -->
@@ -37,14 +37,14 @@
                     Stroke="{StaticResource InputBorder}"
                     StrokeShape="RoundRectangle 10"
                     StrokeThickness="1"
-                    Padding="12,4">
+                    Padding="14,6">
                 <Editor x:Name="detailsEditor"
-                        Placeholder="Details"
+                        Placeholder="Details (optional)"
                         PlaceholderColor="{StaticResource TextSecondary}"
                         TextColor="{StaticResource TextPrimary}"
                         BackgroundColor="Transparent"
                         MaxLength="240" Keyboard="Text"
-                        HeightRequest="72"
+                        HeightRequest="70"
                         AutoSize="TextChanges"/>
             </Border>
 
@@ -59,7 +59,7 @@
                 <Button x:Name="addBtn"
                         Grid.Column="0" Grid.ColumnSpan="3"
                         IsVisible="True"
-                        Text="＋  Add Task"
+                        Text="Add Task"
                         TextColor="White"
                         BackgroundColor="{StaticResource AccentPrimary}"
                         CornerRadius="10" HeightRequest="46"
@@ -69,7 +69,7 @@
                 <Button x:Name="editBtn"
                         Grid.Column="0" Grid.ColumnSpan="2"
                         IsVisible="False"
-                        Text="Save Changes"
+                        Text="Save"
                         TextColor="White"
                         BackgroundColor="{StaticResource AccentEdit}"
                         CornerRadius="10" HeightRequest="46"
@@ -80,12 +80,15 @@
                         Grid.Column="2"
                         IsVisible="False"
                         Text="Cancel"
-                        TextColor="White"
-                        BackgroundColor="{StaticResource AccentDanger}"
+                        TextColor="{StaticResource TextSecondary}"
+                        BackgroundColor="{StaticResource InputBg}"
                         CornerRadius="10" HeightRequest="46"
                         FontAttributes="Bold" FontSize="14"
                         Clicked="CancelEdit"/>
             </Grid>
+
+            <!-- Divider -->
+            <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" Margin="0,4,0,0"/>
         </VerticalStackLayout>
 
         <!-- ── List ── -->
@@ -94,64 +97,72 @@
             <Label Grid.Row="0"
                    Text="MY TASKS"
                    FontSize="11" FontAttributes="Bold" CharacterSpacing="1.5"
-                   TextColor="{StaticResource TextSecondary}"
-                   Margin="16,14,16,6"/>
+                   TextColor="{StaticResource AccentPrimary}"
+                   Margin="20,14,20,6"/>
 
             <ListView x:Name="todoLV"
                       Grid.Row="1"
                       HorizontalOptions="Fill" VerticalOptions="FillAndExpand"
                       HasUnevenRows="True"
                       SeparatorVisibility="None"
-                      BackgroundColor="{StaticResource AppBg}"
+                      BackgroundColor="White"
                       ItemSelected="TodoLV_OnItemSelected"
                       ItemTapped="todoLV_ItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Border BackgroundColor="{StaticResource CardBg}"
-                                    Stroke="{StaticResource CardBorder}"
-                                    StrokeShape="RoundRectangle 12"
-                                    StrokeThickness="1"
-                                    Margin="16,5"
-                                    Padding="14,12">
-                                <Grid ColumnSpacing="10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                            <Grid Padding="20,14" ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="1"/>
+                                </Grid.RowDefinitions>
 
-                                    <Label Grid.Row="0" Grid.Column="0"
-                                           Text="{Binding title}"
-                                           FontSize="16" FontAttributes="Bold"
-                                           TextColor="{StaticResource TextPrimary}"
-                                           LineBreakMode="TailTruncation"
-                                           VerticalOptions="Center"/>
+                                <!-- Orange accent strip -->
+                                <BoxView Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+                                         BackgroundColor="{StaticResource AccentPrimary}"
+                                         CornerRadius="2"
+                                         WidthRequest="4"
+                                         VerticalOptions="Fill"/>
 
-                                    <Label Grid.Row="1" Grid.Column="0"
-                                           Text="{Binding detail}"
-                                           FontSize="13"
-                                           TextColor="{StaticResource TextSecondary}"
-                                           LineBreakMode="WordWrap"
-                                           VerticalOptions="Center"
-                                           Margin="0,3,0,0"/>
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding title}"
+                                       FontSize="15" FontAttributes="Bold"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       LineBreakMode="TailTruncation"
+                                       VerticalOptions="Center"/>
 
-                                    <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
-                                            Text="Delete"
-                                            BackgroundColor="{StaticResource AccentDanger}"
-                                            TextColor="White"
-                                            FontSize="13" FontAttributes="Bold"
-                                            CornerRadius="8"
-                                            WidthRequest="72" HeightRequest="38"
-                                            Padding="0"
-                                            VerticalOptions="Center"
-                                            ClassId="{Binding id}"
-                                            Clicked="DeleteToDoItem"/>
-                                </Grid>
-                            </Border>
+                                <Label Grid.Row="1" Grid.Column="1"
+                                       Text="{Binding detail}"
+                                       FontSize="13"
+                                       TextColor="{StaticResource TextSecondary}"
+                                       LineBreakMode="WordWrap"
+                                       VerticalOptions="Center"
+                                       Margin="0,2,0,0"/>
+
+                                <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2"
+                                        Text="Delete"
+                                        BackgroundColor="{StaticResource AccentLight}"
+                                        TextColor="{StaticResource AccentDanger}"
+                                        FontSize="12" FontAttributes="Bold"
+                                        CornerRadius="8"
+                                        WidthRequest="68" HeightRequest="36"
+                                        Padding="0"
+                                        VerticalOptions="Center"
+                                        ClassId="{Binding id}"
+                                        Clicked="DeleteToDoItem"/>
+
+                                <!-- Row divider -->
+                                <BoxView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                                         BackgroundColor="{StaticResource Divider}"
+                                         HeightRequest="1"
+                                         Margin="0,10,0,0"/>
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
