@@ -1,0 +1,17 @@
+## .NET / MAUI
+obj/
+bin/
+*.user
+*.suo
+.vs/
+.idea/
+
+## NuGet
+packages/
+*.nupkg
+project.lock.json
+project.nuget.cache
+
+## OS
+.DS_Store
+Thumbs.db
