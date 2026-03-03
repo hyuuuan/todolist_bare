@@ -1,0 +1,1 @@
+-v --force --timestamp=none --sign - /Users/hyuuan/MobileDev/listview/ToDoMaui_Listview/bin/Debug/net10.0-ios/iossimulator-arm64/ToDoMaui_Listview.app/libSystem.IO.Compression.Native.dylib
