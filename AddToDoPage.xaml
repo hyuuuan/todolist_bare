@@ -2,45 +2,59 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoMaui_Listview.AddToDoPage"
-             BackgroundColor="#F3F3F5"
-             Title="Add">
+             BackgroundColor="{StaticResource AppSurface}"
+             Title="Add Task">
 
-    <Grid Padding="20,16,20,24" RowDefinitions="Auto,Auto,Auto,*">
-        <Border Grid.Row="0"
-                BackgroundColor="White"
-                Stroke="#DADADF"
-                StrokeShape="RoundRectangle 8"
-                StrokeThickness="1"
-                Padding="10,0">
-            <Entry x:Name="TitleEntry"
-                   Placeholder="Title"
-                   Keyboard="Text"
-                   ReturnType="Next"
-                   HeightRequest="48" />
-        </Border>
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#F7FAFF" Offset="0.0" />
+            <GradientStop Color="#EAF0FF" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
-        <Border Grid.Row="1"
-                Margin="0,10,0,0"
-                BackgroundColor="White"
-                Stroke="#DADADF"
-                StrokeShape="RoundRectangle 8"
-                StrokeThickness="1"
-                Padding="10,8">
-            <Editor x:Name="DetailsEditor"
-                    Placeholder="Details"
-                    Keyboard="Text"
-                    AutoSize="TextChanges"
-                    HeightRequest="110" />
-        </Border>
+    <ScrollView>
+        <VerticalStackLayout Padding="20,18,20,24" Spacing="14">
+            <Border Style="{StaticResource AppCardBorderStyle}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Add New Task"
+                           Style="{StaticResource PageHeadingStyle}"
+                           FontSize="26" />
+                    <Label Text="Capture the title and a short description to keep your day organized."
+                           Style="{StaticResource PageSubheadingStyle}" />
+                </VerticalStackLayout>
+            </Border>
 
-        <Button Grid.Row="2"
-                Text="Add"
-                Margin="0,28,0,0"
-                HeightRequest="50"
-                CornerRadius="10"
-                FontAttributes="Bold"
-                BackgroundColor="#8F90D8"
-                TextColor="White"
-                Clicked="OnAddClicked" />
-    </Grid>
+            <Border Style="{StaticResource AppCardBorderStyle}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Task Title"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="13"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Entry x:Name="TitleEntry"
+                               Placeholder="What needs to be done?"
+                               Style="{StaticResource InputEntryStyle}"
+                               Keyboard="Text"
+                               ReturnType="Next" />
+                    </Border>
+
+                    <Label Text="Details"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="13"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Border Style="{StaticResource InputBorderStyle}" Padding="14,8">
+                        <Editor x:Name="DetailsEditor"
+                                Placeholder="Optional notes, checklist, or context"
+                                Style="{StaticResource InputEditorStyle}"
+                                Keyboard="Text" />
+                    </Border>
+
+                    <Button Text="Save Task"
+                            Style="{StaticResource PrimaryActionButtonStyle}"
+                            Margin="0,4,0,0"
+                            Clicked="OnAddClicked" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

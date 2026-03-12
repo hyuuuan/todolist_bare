@@ -2,83 +2,149 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoMaui_Listview.ToDoPage"
-             BackgroundColor="#F3F3F5"
-             Title="ToDo">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AppSurface}"
+             Title="Tasks">
 
-    <Grid RowDefinitions="Auto,*">
-        <VerticalStackLayout Grid.Row="0" Padding="16,18,16,0" Spacing="8">
-            <Label Text="ToDo"
-                   FontSize="36"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="#565862" />
-            <BoxView HeightRequest="1" BackgroundColor="#DCDCE0" />
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#F7FAFF" Offset="0.0" />
+            <GradientStop Color="{StaticResource AppSurfaceAlt}" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <VerticalStackLayout Grid.Row="0"
+                             Padding="20,20,20,12"
+                             Spacing="12">
+            <Border Style="{StaticResource AppCardBorderStyle}">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="2">
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           Text="Today Focus"
+                           Style="{StaticResource PageHeadingStyle}"
+                           FontSize="30" />
+
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Text="Keep momentum by clearing high-priority tasks first."
+                           Style="{StaticResource PageSubheadingStyle}" />
+
+                    <Border Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="1"
+                            Padding="14,10"
+                            BackgroundColor="{StaticResource AppBrandSoft}"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 14"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                        <VerticalStackLayout Spacing="0">
+                            <Label HorizontalOptions="Center"
+                                   Text="{Binding Source={x:Reference ToDoListView}, Path=ItemsSource.Count}"
+                                   FontFamily="OpenSansSemibold"
+                                   FontSize="22"
+                                   TextColor="{StaticResource AppBrand}" />
+                            <Label HorizontalOptions="Center"
+                                   Text="open"
+                                   FontFamily="OpenSansRegular"
+                                   FontSize="11"
+                                   TextColor="{StaticResource AppTextSecondary}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </Border>
         </VerticalStackLayout>
 
-        <Grid Grid.Row="1" Padding="16,10,16,12">
+        <Border Grid.Row="1"
+                Margin="20,0,20,90"
+                Style="{StaticResource AppCardBorderStyle}">
             <ListView x:Name="ToDoListView"
                       HasUnevenRows="True"
                       SeparatorVisibility="None"
                       BackgroundColor="Transparent"
-                      ItemTapped="OnItemTapped">
+                      ItemTapped="OnItemTapped"
+                      Margin="0,4,0,0">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Border Margin="0,0,0,10"
-                                    Padding="10,8"
-                                    BackgroundColor="White"
-                                    Stroke="#D7D7DC"
+                            <Border Margin="0,0,0,12"
+                                    Padding="12"
+                                    BackgroundColor="#FDFEFF"
+                                    Stroke="{StaticResource AppCardBorder}"
                                     StrokeThickness="1"
-                                    StrokeShape="RoundRectangle 8">
-                                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
-                                    <Label Text="{Binding ItemName}"
+                                    StrokeShape="RoundRectangle 14">
+                                <Grid ColumnDefinitions="*,Auto,Auto"
+                                      RowDefinitions="Auto,Auto"
+                                      ColumnSpacing="8"
+                                      RowSpacing="4">
+                                    <Label Grid.Row="0"
+                                           Grid.Column="0"
+                                           Text="{Binding ItemName}"
+                                           FontFamily="OpenSansSemibold"
                                            FontSize="16"
-                                           TextColor="#1C1C1E"
-                                           VerticalOptions="Center"
-                                           VerticalTextAlignment="Center"
+                                           TextColor="{StaticResource AppTextPrimary}"
                                            LineBreakMode="TailTruncation" />
 
-                                    <Button Grid.Column="1"
-                                            Text="Del"
-                                            WidthRequest="54"
-                                            HeightRequest="34"
-                                            CornerRadius="8"
+                                    <Button Grid.Row="0"
+                                            Grid.Column="1"
+                                            Text="Delete"
+                                            WidthRequest="68"
+                                            HeightRequest="32"
+                                            CornerRadius="10"
                                             Padding="0"
-                                            FontSize="12"
-                                            BackgroundColor="#F7E8EA"
-                                            TextColor="#9E4A53"
+                                            FontFamily="OpenSansSemibold"
+                                            FontSize="11"
+                                            BackgroundColor="{StaticResource AppDangerSoft}"
+                                            TextColor="{StaticResource AppDanger}"
                                             ClassId="{Binding ItemId}"
                                             Clicked="OnDeleteClicked" />
 
-                                    <Button Grid.Column="2"
-                                            Text="✓"
-                                            WidthRequest="44"
-                                            HeightRequest="34"
-                                            CornerRadius="8"
+                                    <Button Grid.Row="0"
+                                            Grid.Column="2"
+                                            Text="Done"
+                                            WidthRequest="58"
+                                            HeightRequest="32"
+                                            CornerRadius="10"
                                             Padding="0"
-                                            FontSize="16"
-                                            BackgroundColor="#EEF1FD"
-                                            TextColor="#454A8F"
+                                            FontFamily="OpenSansSemibold"
+                                            FontSize="11"
+                                            BackgroundColor="{StaticResource AppBrandSoft}"
+                                            TextColor="{StaticResource AppBrandDark}"
                                             ClassId="{Binding ItemId}"
                                             Clicked="OnCompleteClicked" />
+
+                                    <Label Grid.Row="1"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="3"
+                                           Text="{Binding ItemDescription}"
+                                           FontFamily="OpenSansRegular"
+                                           FontSize="13"
+                                           TextColor="{StaticResource AppTextSecondary}"
+                                           MaxLines="2"
+                                           LineBreakMode="TailTruncation">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding ItemDescription}" Value="">
+                                                <Setter Property="Text" Value="No details yet" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
                                 </Grid>
                             </Border>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+        </Border>
 
-            <Button Text="+"
-                    WidthRequest="56"
-                    HeightRequest="56"
-                    CornerRadius="14"
-                    FontSize="24"
-                    HorizontalOptions="End"
-                    VerticalOptions="End"
-                    Margin="0,0,8,80"
-                    BackgroundColor="#8F90D8"
-                    TextColor="White"
-                    Clicked="OnAddClicked" />
-        </Grid>
+        <Button Grid.Row="2"
+                Text="+ New Task"
+                WidthRequest="132"
+                HeightRequest="52"
+                CornerRadius="16"
+                HorizontalOptions="End"
+                Margin="0,0,20,20"
+                Style="{StaticResource PrimaryActionButtonStyle}"
+                Clicked="OnAddClicked" />
     </Grid>
 </ContentPage>

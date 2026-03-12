@@ -2,6 +2,8 @@ namespace ToDoMaui_Listview;
 
 public partial class ProfilePage : ContentPage
 {
+    private readonly ToDoStore _store = ToDoStore.Instance;
+
     public ProfilePage()
     {
         InitializeComponent();
@@ -19,6 +21,8 @@ public partial class ProfilePage : ContentPage
         var auth = AuthService.Instance;
         NameLabel.Text = string.IsNullOrWhiteSpace(auth.CurrentUserName) ? "User" : auth.CurrentUserName;
         EmailLabel.Text = string.IsNullOrWhiteSpace(auth.CurrentUserEmail) ? "-" : auth.CurrentUserEmail;
+        PendingCountLabel.Text = _store.ActiveItems.Count.ToString();
+        CompletedCountLabel.Text = _store.CompletedItems.Count.ToString();
     }
 
     private void OnSignOutClicked(object? sender, EventArgs e)

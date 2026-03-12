@@ -5,16 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ToDoMaui_Listview"
     Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarBackgroundColor="#ECECEE"
-    Shell.TabBarForegroundColor="#0B84FF"
-    Shell.TabBarTitleColor="#0B84FF"
-    Shell.TabBarUnselectedColor="#A0A0A0"
+    Shell.BackgroundColor="{StaticResource AppSurface}"
+    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarForegroundColor="{StaticResource AppBrand}"
+    Shell.TabBarTitleColor="{StaticResource AppBrand}"
+    Shell.TabBarUnselectedColor="{StaticResource AppTextSecondary}"
     Title="To Do">
 
     <TabBar>
-        <Tab Title="ToDo" Route="todo-tab">
+        <Tab Title="Tasks" Route="todo-tab">
             <ShellContent
-                Title="ToDo"
+                Title="Tasks"
                 Route="todo"
                 ContentTemplate="{DataTemplate local:ToDoPage}" />
         </Tab>

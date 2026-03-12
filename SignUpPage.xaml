@@ -3,97 +3,90 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoMaui_Listview.SignUpPage"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#F3F3F5"
+             BackgroundColor="{StaticResource AppSurface}"
              Title="Sign Up">
 
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#EFF4FF" Offset="0.0" />
+            <GradientStop Color="#FAFCFF" Offset="0.55" />
+            <GradientStop Color="#EAF4FF" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
     <ScrollView>
-        <VerticalStackLayout Padding="28,56,28,24" Spacing="12" VerticalOptions="Center">
-            <Label Text="Sign up"
-                   FontSize="26"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="#303030"
-                   Margin="0,0,0,8" />
+        <VerticalStackLayout Padding="24,42,24,28" Spacing="16">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Create Account"
+                       FontFamily="OpenSansSemibold"
+                       FontSize="31"
+                       TextColor="{StaticResource AppTextPrimary}" />
+                <Label Text="Start organizing your tasks in one clean workspace."
+                       Style="{StaticResource PageSubheadingStyle}" />
+            </VerticalStackLayout>
 
-            <Border BackgroundColor="#D0D0D4"
-                    StrokeThickness="0"
-                    StrokeShape="RoundRectangle 8"
-                    HeightRequest="170"
-                    WidthRequest="220"
-                    HorizontalOptions="Center">
-                <Image Source="dotnet_bot.png"
-                       Aspect="AspectFit"
-                       Opacity="0.7"
-                       Margin="10" />
+            <Border Style="{StaticResource AppCardBorderStyle}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="User Name"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="13"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Entry x:Name="UserNameEntry"
+                               Placeholder="What should we call you?"
+                               Style="{StaticResource InputEntryStyle}"
+                               Keyboard="Text"
+                               ReturnType="Next" />
+                    </Border>
+
+                    <Label Text="Email"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="13"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Entry x:Name="EmailEntry"
+                               Placeholder="name@example.com"
+                               Style="{StaticResource InputEntryStyle}"
+                               Keyboard="Email"
+                               ReturnType="Next" />
+                    </Border>
+
+                    <Label Text="Password"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="13"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Entry x:Name="PasswordEntry"
+                               Placeholder="Set a password"
+                               IsPassword="True"
+                               Style="{StaticResource InputEntryStyle}"
+                               Keyboard="Text"
+                               ReturnType="Next" />
+                    </Border>
+
+                    <Label Text="Confirm Password"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="13"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Entry x:Name="ConfirmPasswordEntry"
+                               Placeholder="Re-enter password"
+                               IsPassword="True"
+                               Style="{StaticResource InputEntryStyle}"
+                               Keyboard="Text"
+                               ReturnType="Done" />
+                    </Border>
+
+                    <Button Text="Create account"
+                            Style="{StaticResource PrimaryActionButtonStyle}"
+                            Margin="0,4,0,0"
+                            Clicked="OnSignUpClicked" />
+
+                    <Button Text="Back to sign in"
+                            Style="{StaticResource SecondaryActionButtonStyle}"
+                            Clicked="OnGoToSignInClicked" />
+                </VerticalStackLayout>
             </Border>
-
-            <Border BackgroundColor="White"
-                    Stroke="#DADADF"
-                    StrokeShape="RoundRectangle 10"
-                    StrokeThickness="1"
-                    Padding="12,0"
-                    Margin="0,8,0,0">
-                <Entry x:Name="UserNameEntry"
-                       Placeholder="User name"
-                       Keyboard="Text"
-                       ReturnType="Next"
-                       HeightRequest="48" />
-            </Border>
-
-            <Border BackgroundColor="White"
-                    Stroke="#DADADF"
-                    StrokeShape="RoundRectangle 10"
-                    StrokeThickness="1"
-                    Padding="12,0">
-                <Entry x:Name="EmailEntry"
-                       Placeholder="Email address"
-                       Keyboard="Email"
-                       ReturnType="Next"
-                       HeightRequest="48" />
-            </Border>
-
-            <Border BackgroundColor="White"
-                    Stroke="#DADADF"
-                    StrokeShape="RoundRectangle 10"
-                    StrokeThickness="1"
-                    Padding="12,0">
-                <Entry x:Name="PasswordEntry"
-                       Placeholder="Password"
-                       IsPassword="True"
-                       Keyboard="Text"
-                       ReturnType="Next"
-                       HeightRequest="48" />
-            </Border>
-
-            <Border BackgroundColor="White"
-                    Stroke="#DADADF"
-                    StrokeShape="RoundRectangle 10"
-                    StrokeThickness="1"
-                    Padding="12,0">
-                <Entry x:Name="ConfirmPasswordEntry"
-                       Placeholder="Confirm Password"
-                       IsPassword="True"
-                       Keyboard="Text"
-                       ReturnType="Done"
-                       HeightRequest="48" />
-            </Border>
-
-            <Button Text="Sign up"
-                    HeightRequest="48"
-                    FontAttributes="Bold"
-                    BackgroundColor="#8F90D8"
-                    TextColor="White"
-                    CornerRadius="10"
-                    Margin="0,6,0,0"
-                    Clicked="OnSignUpClicked" />
-
-            <Button Text="Sign in"
-                    HeightRequest="48"
-                    FontAttributes="Bold"
-                    BackgroundColor="#C5C5E4"
-                    TextColor="#656565"
-                    CornerRadius="10"
-                    Clicked="OnGoToSignInClicked" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

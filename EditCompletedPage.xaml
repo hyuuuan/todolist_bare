@@ -2,66 +2,67 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoMaui_Listview.EditCompletedPage"
-             BackgroundColor="#F3F3F5"
-             Title="Edit">
+             BackgroundColor="{StaticResource AppSurface}"
+             Title="Edit Completed">
 
-    <Grid Padding="20,16,20,24" RowDefinitions="Auto,Auto,Auto,Auto,*">
-        <Border Grid.Row="0"
-                BackgroundColor="White"
-                Stroke="#DADADF"
-                StrokeShape="RoundRectangle 8"
-                StrokeThickness="1"
-                Padding="10,0">
-            <Entry x:Name="TitleEntry"
-                   Placeholder="Title"
-                   Keyboard="Text"
-                   ReturnType="Next"
-                   HeightRequest="48" />
-        </Border>
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#F9FCFF" Offset="0.0" />
+            <GradientStop Color="#EAF6EF" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
-        <Border Grid.Row="1"
-                Margin="0,10,0,0"
-                BackgroundColor="White"
-                Stroke="#DADADF"
-                StrokeShape="RoundRectangle 8"
-                StrokeThickness="1"
-                Padding="10,8">
-            <Editor x:Name="DetailsEditor"
-                    Placeholder="Details"
-                    Keyboard="Text"
-                    AutoSize="TextChanges"
-                    HeightRequest="110" />
-        </Border>
+    <ScrollView>
+        <VerticalStackLayout Padding="20,18,20,24" Spacing="14">
+            <Border Style="{StaticResource AppCardBorderStyle}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Edit Completed Task"
+                           Style="{StaticResource PageHeadingStyle}"
+                           FontSize="24" />
+                    <Label Text="Refine details, move back to active, or remove permanently."
+                           Style="{StaticResource PageSubheadingStyle}" />
+                </VerticalStackLayout>
+            </Border>
 
-        <Button Grid.Row="2"
-                Text="Update"
-                Margin="0,28,0,0"
-                HeightRequest="50"
-                CornerRadius="10"
-                FontAttributes="Bold"
-                BackgroundColor="#8F90D8"
-                TextColor="White"
-                Clicked="OnUpdateClicked" />
+            <Border Style="{StaticResource AppCardBorderStyle}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Task Title"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="13"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Entry x:Name="TitleEntry"
+                               Placeholder="Task title"
+                               Style="{StaticResource InputEntryStyle}"
+                               Keyboard="Text"
+                               ReturnType="Next" />
+                    </Border>
 
-        <Button Grid.Row="3"
-                Text="Incomplete"
-                Margin="0,10,0,0"
-                HeightRequest="50"
-                CornerRadius="10"
-                FontAttributes="Bold"
-                BackgroundColor="#8C8C8C"
-                TextColor="White"
-                Clicked="OnIncompleteClicked" />
+                    <Label Text="Details"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="13"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Border Style="{StaticResource InputBorderStyle}" Padding="14,8">
+                        <Editor x:Name="DetailsEditor"
+                                Placeholder="Notes"
+                                Style="{StaticResource InputEditorStyle}"
+                                Keyboard="Text" />
+                    </Border>
 
-        <Button Grid.Row="4"
-                Text="Delete"
-                Margin="0,10,0,0"
-                HeightRequest="50"
-                CornerRadius="10"
-                FontAttributes="Bold"
-                VerticalOptions="Start"
-                BackgroundColor="#EAB0BF"
-                TextColor="#7D3D4D"
-                Clicked="OnDeleteClicked" />
-    </Grid>
+                    <Button Text="Update"
+                            Style="{StaticResource PrimaryActionButtonStyle}"
+                            Margin="0,4,0,0"
+                            Clicked="OnUpdateClicked" />
+
+                    <Button Text="Move to Active"
+                            Style="{StaticResource SecondaryActionButtonStyle}"
+                            Clicked="OnIncompleteClicked" />
+
+                    <Button Text="Delete Task"
+                            Style="{StaticResource DangerActionButtonStyle}"
+                            Clicked="OnDeleteClicked" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

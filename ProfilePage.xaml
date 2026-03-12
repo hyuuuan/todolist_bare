@@ -2,57 +2,101 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoMaui_Listview.ProfilePage"
-             BackgroundColor="#F3F3F5"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AppSurface}"
              Title="Profile">
 
-    <Grid RowDefinitions="Auto,*" Padding="18,14,18,18">
-        <VerticalStackLayout Grid.Row="0" Spacing="8">
-            <Label Text="Profile"
-                   FontSize="36"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="#565862" />
-            <BoxView HeightRequest="1" BackgroundColor="#DCDCE0" />
-        </VerticalStackLayout>
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#F8FBFF" Offset="0.0" />
+            <GradientStop Color="#EDF1FF" Offset="0.65" />
+            <GradientStop Color="#F4F9F8" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
-        <VerticalStackLayout Grid.Row="1"
-                             VerticalOptions="Center"
-                             HorizontalOptions="Center"
-                             Spacing="14"
-                             WidthRequest="280">
-            <Border BackgroundColor="#D0D0D4"
-                    StrokeThickness="0"
-                    StrokeShape="RoundRectangle 8"
-                    HeightRequest="180"
-                    WidthRequest="220"
-                    HorizontalOptions="Center">
-                <Image Source="dotnet_bot.png"
-                       Aspect="AspectFit"
-                       Opacity="0.7"
-                       Margin="10" />
+    <ScrollView>
+        <VerticalStackLayout Padding="20,20,20,28" Spacing="14">
+            <Border Style="{StaticResource AppCardBorderStyle}">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                    <Border WidthRequest="76"
+                            HeightRequest="76"
+                            StrokeThickness="0"
+                            BackgroundColor="{StaticResource AppBrandSoft}"
+                            StrokeShape="RoundRectangle 38"
+                            VerticalOptions="Center">
+                        <Image Source="dotnet_bot.png"
+                               Aspect="AspectFill"
+                               Margin="6" />
+                    </Border>
+
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                        <Label Text="Account"
+                               FontFamily="OpenSansRegular"
+                               FontSize="12"
+                               TextColor="{StaticResource AppTextSecondary}" />
+                        <Label x:Name="NameLabel"
+                               Text="User"
+                               FontFamily="OpenSansSemibold"
+                               FontSize="22"
+                               TextColor="{StaticResource AppTextPrimary}"
+                               LineBreakMode="TailTruncation" />
+                        <Label x:Name="EmailLabel"
+                               Text="user@example.com"
+                               FontFamily="OpenSansRegular"
+                               FontSize="13"
+                               TextColor="{StaticResource AppTextSecondary}"
+                               LineBreakMode="TailTruncation" />
+                    </VerticalStackLayout>
+                </Grid>
             </Border>
 
-            <Label x:Name="NameLabel"
-                   Text="User"
-                   HorizontalOptions="Center"
-                   FontSize="18"
-                   FontAttributes="Bold"
-                   TextColor="#4F4F4F" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Border Grid.Column="0"
+                        Style="{StaticResource AppCardBorderStyle}"
+                        BackgroundColor="#F8FAFF">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Open"
+                               FontFamily="OpenSansRegular"
+                               FontSize="12"
+                               TextColor="{StaticResource AppTextSecondary}" />
+                        <Label x:Name="PendingCountLabel"
+                               Text="0"
+                               FontFamily="OpenSansSemibold"
+                               FontSize="30"
+                               TextColor="{StaticResource AppBrandDark}" />
+                    </VerticalStackLayout>
+                </Border>
 
-            <Label x:Name="EmailLabel"
-                   Text="user@example.com"
-                   HorizontalOptions="Center"
-                   FontSize="14"
-                   TextColor="#808080" />
+                <Border Grid.Column="1"
+                        Style="{StaticResource AppCardBorderStyle}"
+                        BackgroundColor="#F6FCF9">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Completed"
+                               FontFamily="OpenSansRegular"
+                               FontSize="12"
+                               TextColor="{StaticResource AppTextSecondary}" />
+                        <Label x:Name="CompletedCountLabel"
+                               Text="0"
+                               FontFamily="OpenSansSemibold"
+                               FontSize="30"
+                               TextColor="{StaticResource AppSuccess}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
 
-            <Button Text="Sign out"
-                    Margin="0,6,0,0"
-                    HeightRequest="50"
-                    CornerRadius="10"
-                    FontAttributes="Bold"
-                    BackgroundColor="#8C8C8C"
-                    TextColor="White"
-                    Clicked="OnSignOutClicked" />
+            <Border Style="{StaticResource AppCardBorderStyle}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Session"
+                           Style="{StaticResource PageHeadingStyle}"
+                           FontSize="20" />
+                    <Label Text="Use sign out if you are on a shared device to keep your task list private."
+                           Style="{StaticResource PageSubheadingStyle}" />
+                    <Button Text="Sign out"
+                            Style="{StaticResource DangerActionButtonStyle}"
+                            Margin="0,4,0,0"
+                            Clicked="OnSignOutClicked" />
+                </VerticalStackLayout>
+            </Border>
         </VerticalStackLayout>
-    </Grid>
+    </ScrollView>
 </ContentPage>

@@ -9,6 +9,96 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Color x:Key="AppSurface">#F4F7FF</Color>
+            <Color x:Key="AppSurfaceAlt">#E9EEFF</Color>
+            <Color x:Key="AppCard">#FFFFFF</Color>
+            <Color x:Key="AppCardBorder">#D8E0F2</Color>
+            <Color x:Key="AppTextPrimary">#1C2640</Color>
+            <Color x:Key="AppTextSecondary">#65708B</Color>
+            <Color x:Key="AppBrand">#3559F6</Color>
+            <Color x:Key="AppBrandDark">#253FC0</Color>
+            <Color x:Key="AppBrandSoft">#E7EDFF</Color>
+            <Color x:Key="AppSuccess">#2C9B62</Color>
+            <Color x:Key="AppSuccessSoft">#E4F4EA</Color>
+            <Color x:Key="AppDanger">#C44747</Color>
+            <Color x:Key="AppDangerSoft">#FDECEC</Color>
+            <Color x:Key="AppNeutralSoft">#EEF2FA</Color>
+
+            <Style x:Key="PageHeadingStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="TextColor" Value="{StaticResource AppTextPrimary}" />
+                <Setter Property="LineBreakMode" Value="TailTruncation" />
+            </Style>
+
+            <Style x:Key="PageSubheadingStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="TextColor" Value="{StaticResource AppTextSecondary}" />
+            </Style>
+
+            <Style x:Key="AppCardBorderStyle" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{StaticResource AppCard}" />
+                <Setter Property="Stroke" Value="{StaticResource AppCardBorder}" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 18" />
+                <Setter Property="Padding" Value="16" />
+            </Style>
+
+            <Style x:Key="InputBorderStyle" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="#F8FAFF" />
+                <Setter Property="Stroke" Value="{StaticResource AppCardBorder}" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+                <Setter Property="Padding" Value="14,0" />
+            </Style>
+
+            <Style x:Key="InputEntryStyle" TargetType="Entry">
+                <Setter Property="TextColor" Value="{StaticResource AppTextPrimary}" />
+                <Setter Property="PlaceholderColor" Value="#98A3BF" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="ClearButtonVisibility" Value="WhileEditing" />
+            </Style>
+
+            <Style x:Key="InputEditorStyle" TargetType="Editor">
+                <Setter Property="TextColor" Value="{StaticResource AppTextPrimary}" />
+                <Setter Property="PlaceholderColor" Value="#98A3BF" />
+                <Setter Property="FontFamily" Value="OpenSansRegular" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="AutoSize" Value="TextChanges" />
+                <Setter Property="HeightRequest" Value="120" />
+            </Style>
+
+            <Style x:Key="ActionButtonBaseStyle" TargetType="Button">
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="Padding" Value="14,10" />
+                <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+
+            <Style x:Key="PrimaryActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonBaseStyle}">
+                <Setter Property="BackgroundColor" Value="{StaticResource AppBrand}" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+
+            <Style x:Key="SecondaryActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonBaseStyle}">
+                <Setter Property="BackgroundColor" Value="{StaticResource AppNeutralSoft}" />
+                <Setter Property="TextColor" Value="{StaticResource AppTextPrimary}" />
+            </Style>
+
+            <Style x:Key="SuccessActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonBaseStyle}">
+                <Setter Property="BackgroundColor" Value="{StaticResource AppSuccessSoft}" />
+                <Setter Property="TextColor" Value="{StaticResource AppSuccess}" />
+            </Style>
+
+            <Style x:Key="DangerActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonBaseStyle}">
+                <Setter Property="BackgroundColor" Value="{StaticResource AppDangerSoft}" />
+                <Setter Property="TextColor" Value="{StaticResource AppDanger}" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
