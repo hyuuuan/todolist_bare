@@ -26,6 +26,18 @@ public static class MauiProgram
 		{
 			handler.PlatformView.InputAccessoryView = null;
 		});
+
+		// Keep wrapped inputs visually clean by removing native field borders on iOS.
+		EntryHandler.Mapper.AppendToMapping("BorderlessInput", (handler, view) =>
+		{
+			handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+			handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+		});
+		EditorHandler.Mapper.AppendToMapping("BorderlessInput", (handler, view) =>
+		{
+			handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
+			handler.PlatformView.Layer.BorderWidth = 0;
+		});
 #endif
 
 #if DEBUG

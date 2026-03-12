@@ -7,8 +7,8 @@
 
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#F7FAFF" Offset="0.0" />
-            <GradientStop Color="#EAF0FF" Offset="1.0" />
+            <GradientStop Color="{StaticResource AppSurface}" Offset="0.0" />
+            <GradientStop Color="{StaticResource AppSurfaceAlt}" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
 

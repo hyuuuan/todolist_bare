@@ -8,12 +8,12 @@
 
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#F7FAFF" Offset="0.0" />
+            <GradientStop Color="{StaticResource AppSurface}" Offset="0.0" />
             <GradientStop Color="{StaticResource AppSurfaceAlt}" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*">
         <VerticalStackLayout Grid.Row="0"
                              Padding="20,20,20,12"
                              Spacing="12">
@@ -56,21 +56,19 @@
             </Border>
         </VerticalStackLayout>
 
-        <Border Grid.Row="1"
-                Margin="20,0,20,90"
-                Style="{StaticResource AppCardBorderStyle}">
+        <Grid Grid.Row="1">
             <ListView x:Name="ToDoListView"
+                      Margin="20,0,20,0"
                       HasUnevenRows="True"
                       SeparatorVisibility="None"
                       BackgroundColor="Transparent"
-                      ItemTapped="OnItemTapped"
-                      Margin="0,4,0,0">
+                      ItemTapped="OnItemTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <Border Margin="0,0,0,12"
                                     Padding="12"
-                                    BackgroundColor="#FDFEFF"
+                                    BackgroundColor="{StaticResource AppCard}"
                                     Stroke="{StaticResource AppCardBorder}"
                                     StrokeThickness="1"
                                     StrokeShape="RoundRectangle 14">
@@ -87,30 +85,34 @@
                                            LineBreakMode="TailTruncation" />
 
                                     <Button Grid.Row="0"
+                                            Grid.RowSpan="2"
                                             Grid.Column="1"
-                                            Text="Delete"
-                                            WidthRequest="68"
-                                            HeightRequest="32"
+                                            Text="X"
+                                            WidthRequest="36"
+                                            HeightRequest="36"
                                             CornerRadius="10"
                                             Padding="0"
                                             FontFamily="OpenSansSemibold"
-                                            FontSize="11"
+                                            FontSize="14"
                                             BackgroundColor="{StaticResource AppDangerSoft}"
                                             TextColor="{StaticResource AppDanger}"
+                                            VerticalOptions="Center"
                                             ClassId="{Binding ItemId}"
                                             Clicked="OnDeleteClicked" />
 
                                     <Button Grid.Row="0"
+                                            Grid.RowSpan="2"
                                             Grid.Column="2"
-                                            Text="Done"
-                                            WidthRequest="58"
-                                            HeightRequest="32"
+                                            Text="✓"
+                                            WidthRequest="36"
+                                            HeightRequest="36"
                                             CornerRadius="10"
                                             Padding="0"
                                             FontFamily="OpenSansSemibold"
-                                            FontSize="11"
+                                            FontSize="16"
                                             BackgroundColor="{StaticResource AppBrandSoft}"
                                             TextColor="{StaticResource AppBrandDark}"
+                                            VerticalOptions="Center"
                                             ClassId="{Binding ItemId}"
                                             Clicked="OnCompleteClicked" />
 
@@ -134,17 +136,22 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
-        </Border>
 
-        <Button Grid.Row="2"
-                Text="+ New Task"
-                WidthRequest="132"
-                HeightRequest="52"
-                CornerRadius="16"
-                HorizontalOptions="End"
-                Margin="0,0,20,20"
-                Style="{StaticResource PrimaryActionButtonStyle}"
-                Clicked="OnAddClicked" />
+                <ListView.Footer>
+                    <Grid HeightRequest="96" BackgroundColor="Transparent" />
+                </ListView.Footer>
+            </ListView>
+
+            <Button Text="+ New Task"
+                    WidthRequest="150"
+                    HeightRequest="52"
+                    CornerRadius="16"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End"
+                    Margin="0,0,0,18"
+                    ZIndex="10"
+                    Style="{StaticResource PrimaryActionButtonStyle}"
+                    Clicked="OnAddClicked" />
+        </Grid>
     </Grid>
 </ContentPage>

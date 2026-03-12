@@ -8,9 +8,9 @@
 
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#F8FBFF" Offset="0.0" />
-            <GradientStop Color="#EDF1FF" Offset="0.65" />
-            <GradientStop Color="#F4F9F8" Offset="1.0" />
+            <GradientStop Color="{StaticResource AppSurface}" Offset="0.0" />
+            <GradientStop Color="{StaticResource AppSurfaceAlt}" Offset="0.7" />
+            <GradientStop Color="{StaticResource AppBrandSoft}" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
 
@@ -53,7 +53,7 @@
             <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                 <Border Grid.Column="0"
                         Style="{StaticResource AppCardBorderStyle}"
-                        BackgroundColor="#F8FAFF">
+                        BackgroundColor="{StaticResource AppBrandSoft}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="Open"
                                FontFamily="OpenSansRegular"
@@ -69,7 +69,7 @@
 
                 <Border Grid.Column="1"
                         Style="{StaticResource AppCardBorderStyle}"
-                        BackgroundColor="#F6FCF9">
+                        BackgroundColor="{StaticResource AppSuccessSoft}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="Completed"
                                FontFamily="OpenSansRegular"
