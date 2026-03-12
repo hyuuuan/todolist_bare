@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoMaui_Listview.EditCompletedPage"
+             BackgroundColor="#F3F3F5"
+             Title="Edit">
+
+    <Grid Padding="20,16,20,24" RowDefinitions="Auto,Auto,Auto,Auto,*">
+        <Border Grid.Row="0"
+                BackgroundColor="White"
+                Stroke="#DADADF"
+                StrokeShape="RoundRectangle 8"
+                StrokeThickness="1"
+                Padding="10,0">
+            <Entry x:Name="TitleEntry"
+                   Placeholder="Title"
+                   Keyboard="Text"
+                   ReturnType="Next"
+                   HeightRequest="48" />
+        </Border>
+
+        <Border Grid.Row="1"
+                Margin="0,10,0,0"
+                BackgroundColor="White"
+                Stroke="#DADADF"
+                StrokeShape="RoundRectangle 8"
+                StrokeThickness="1"
+                Padding="10,8">
+            <Editor x:Name="DetailsEditor"
+                    Placeholder="Details"
+                    Keyboard="Text"
+                    AutoSize="TextChanges"
+                    HeightRequest="110" />
+        </Border>
+
+        <Button Grid.Row="2"
+                Text="Update"
+                Margin="0,28,0,0"
+                HeightRequest="50"
+                CornerRadius="10"
+                FontAttributes="Bold"
+                BackgroundColor="#8F90D8"
+                TextColor="White"
+                Clicked="OnUpdateClicked" />
+
+        <Button Grid.Row="3"
+                Text="Incomplete"
+                Margin="0,10,0,0"
+                HeightRequest="50"
+                CornerRadius="10"
+                FontAttributes="Bold"
+                BackgroundColor="#8C8C8C"
+                TextColor="White"
+                Clicked="OnIncompleteClicked" />
+
+        <Button Grid.Row="4"
+                Text="Delete"
+                Margin="0,10,0,0"
+                HeightRequest="50"
+                CornerRadius="10"
+                FontAttributes="Bold"
+                VerticalOptions="Start"
+                BackgroundColor="#EAB0BF"
+                TextColor="#7D3D4D"
+                Clicked="OnDeleteClicked" />
+    </Grid>
+</ContentPage>

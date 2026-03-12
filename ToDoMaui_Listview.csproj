@@ -29,7 +29,7 @@
 		<ApplicationTitle>ToDoMaui_Listview</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.todomaui_listview</ApplicationId>
+		<ApplicationId>com.wankai.todolist</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -45,11 +45,6 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-	</PropertyGroup>
-
-	<!-- Pin default run target to iPhone simulator in Debug only -->
-	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Debug'">
-		<_DeviceName>:v2:udid=48959757-21D4-4C39-B092-FBAB79466E7E</_DeviceName>
 	</PropertyGroup>
 
 	<ItemGroup>

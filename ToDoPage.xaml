@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoMaui_Listview.ToDoPage"
+             BackgroundColor="#F3F3F5"
+             Title="ToDo">
+
+    <Grid RowDefinitions="Auto,*">
+        <VerticalStackLayout Grid.Row="0" Padding="16,18,16,0" Spacing="8">
+            <Label Text="ToDo"
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#C6C6C6" />
+            <BoxView HeightRequest="1" BackgroundColor="#DCDCE0" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1" Padding="16,10,16,12">
+            <ListView x:Name="ToDoListView"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None"
+                      BackgroundColor="Transparent"
+                      ItemTapped="OnItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Border Margin="0,0,0,10"
+                                    Padding="10,8"
+                                    BackgroundColor="White"
+                                    Stroke="#D7D7DC"
+                                    StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 8">
+                                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                                    <Label Text="{Binding ItemName}"
+                                           FontSize="16"
+                                           VerticalOptions="Center"
+                                           VerticalTextAlignment="Center"
+                                           LineBreakMode="TailTruncation" />
+
+                                    <Button Grid.Column="1"
+                                            Text="Del"
+                                            WidthRequest="54"
+                                            HeightRequest="34"
+                                            CornerRadius="8"
+                                            Padding="0"
+                                            FontSize="12"
+                                            BackgroundColor="#F7E8EA"
+                                            TextColor="#9E4A53"
+                                            ClassId="{Binding ItemId}"
+                                            Clicked="OnDeleteClicked" />
+
+                                    <Button Grid.Column="2"
+                                            Text="✓"
+                                            WidthRequest="44"
+                                            HeightRequest="34"
+                                            CornerRadius="8"
+                                            Padding="0"
+                                            FontSize="16"
+                                            BackgroundColor="#EEF1FD"
+                                            TextColor="#454A8F"
+                                            ClassId="{Binding ItemId}"
+                                            Clicked="OnCompleteClicked" />
+                                </Grid>
+                            </Border>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="+"
+                    WidthRequest="56"
+                    HeightRequest="56"
+                    CornerRadius="14"
+                    FontSize="24"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Margin="0,0,8,80"
+                    BackgroundColor="#8F90D8"
+                    TextColor="White"
+                    Clicked="OnAddClicked" />
+        </Grid>
+    </Grid>
+</ContentPage>

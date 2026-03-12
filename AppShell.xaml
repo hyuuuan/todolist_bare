@@ -5,11 +5,31 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ToDoMaui_Listview"
     Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarBackgroundColor="#ECECEE"
+    Shell.TabBarForegroundColor="#0B84FF"
+    Shell.TabBarUnselectedColor="#A0A0A0"
     Title="To Do">
 
-    <ShellContent
-        Title="To Do"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <Tab Title="ToDo" Route="todo-tab">
+            <ShellContent
+                Title="ToDo"
+                Route="todo"
+                ContentTemplate="{DataTemplate local:ToDoPage}" />
+        </Tab>
 
+        <Tab Title="Completed" Route="completed-tab">
+            <ShellContent
+                Title="Completed"
+                Route="completed"
+                ContentTemplate="{DataTemplate local:CompletedPage}" />
+        </Tab>
+
+        <Tab Title="Profile" Route="profile-tab">
+            <ShellContent
+                Title="Profile"
+                Route="profile"
+                ContentTemplate="{DataTemplate local:ProfilePage}" />
+        </Tab>
+    </TabBar>
 </Shell>

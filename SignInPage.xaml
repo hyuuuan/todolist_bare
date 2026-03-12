@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoMaui_Listview.SignInPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#F3F3F5"
+             Title="Sign In">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="28,56,28,24" Spacing="14" VerticalOptions="Center">
+            <Label Text="To Do Application"
+                   FontSize="30"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#303030" />
+
+            <Label Text="Sign in"
+                   FontSize="20"
+                   HorizontalOptions="Center"
+                   TextColor="#696969"
+                   Margin="0,0,0,10" />
+
+            <Border BackgroundColor="#D0D0D4"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 8"
+                    HeightRequest="180"
+                    WidthRequest="220"
+                    HorizontalOptions="Center">
+                <Image Source="dotnet_bot.png"
+                       Aspect="AspectFit"
+                       Opacity="0.7"
+                       Margin="10" />
+            </Border>
+
+            <Border BackgroundColor="White"
+                    Stroke="#DADADF"
+                    StrokeShape="RoundRectangle 10"
+                    StrokeThickness="1"
+                    Padding="12,0"
+                    Margin="0,8,0,0">
+                <Entry x:Name="EmailEntry"
+                       Placeholder="Email address"
+                       Keyboard="Email"
+                       ReturnType="Next"
+                       ClearButtonVisibility="WhileEditing"
+                       HeightRequest="48" />
+            </Border>
+
+            <Border BackgroundColor="White"
+                    Stroke="#DADADF"
+                    StrokeShape="RoundRectangle 10"
+                    StrokeThickness="1"
+                    Padding="12,0">
+                <Entry x:Name="PasswordEntry"
+                       Placeholder="Password"
+                       IsPassword="True"
+                       Keyboard="Text"
+                       ReturnType="Done"
+                       HeightRequest="48" />
+            </Border>
+
+            <Button Text="Sign in"
+                    HeightRequest="48"
+                    FontAttributes="Bold"
+                    BackgroundColor="#8F90D8"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Margin="0,6,0,0"
+                    Clicked="OnSignInClicked" />
+
+            <Button Text="Sign up"
+                    HeightRequest="48"
+                    FontAttributes="Bold"
+                    BackgroundColor="#C5C5E4"
+                    TextColor="#656565"
+                    CornerRadius="10"
+                    Clicked="OnGoToSignUpClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
