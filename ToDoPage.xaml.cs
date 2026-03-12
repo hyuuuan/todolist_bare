@@ -10,6 +10,12 @@ public partial class ToDoPage : ContentPage
         ToDoListView.ItemsSource = _store.ActiveItems;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        AppNavigator.EnsureSignedIn();
+    }
+
     private async void OnAddClicked(object? sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(AddToDoPage));

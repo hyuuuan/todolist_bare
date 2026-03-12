@@ -11,9 +11,14 @@ public partial class ProfilePage : ContentPage
     {
         base.OnAppearing();
 
+        if (!AppNavigator.EnsureSignedIn())
+        {
+            return;
+        }
+
         var auth = AuthService.Instance;
-        NameLabel.Text = string.IsNullOrWhiteSpace(auth.CurrentUserName) ? "Student" : auth.CurrentUserName;
-        EmailLabel.Text = string.IsNullOrWhiteSpace(auth.CurrentUserEmail) ? "student@todo.app" : auth.CurrentUserEmail;
+        NameLabel.Text = string.IsNullOrWhiteSpace(auth.CurrentUserName) ? "User" : auth.CurrentUserName;
+        EmailLabel.Text = string.IsNullOrWhiteSpace(auth.CurrentUserEmail) ? "-" : auth.CurrentUserEmail;
     }
 
     private void OnSignOutClicked(object? sender, EventArgs e)

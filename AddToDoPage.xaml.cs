@@ -9,8 +9,20 @@ public partial class AddToDoPage : ContentPage
         InitializeComponent();
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        AppNavigator.EnsureSignedIn();
+    }
+
     private async void OnAddClicked(object? sender, EventArgs e)
     {
+        if (!AuthService.Instance.IsSignedIn)
+        {
+            AppNavigator.ShowSignIn();
+            return;
+        }
+
         var title = (TitleEntry.Text ?? string.Empty).Trim();
         var details = (DetailsEditor.Text ?? string.Empty).Trim();
 
@@ -20,7 +32,7 @@ public partial class AddToDoPage : ContentPage
             return;
         }
 
-        _store.AddItem(title, details, AuthService.Instance.CurrentUserId > 0 ? AuthService.Instance.CurrentUserId : 1);
+        _store.AddItem(title, details, AuthService.Instance.CurrentUserId);
         await Shell.Current.GoToAsync("..");
     }
 }

@@ -4,6 +4,12 @@ public static class AppNavigator
 {
     public static void ShowMainShell()
     {
+        if (!AuthService.Instance.IsSignedIn)
+        {
+            ShowSignIn();
+            return;
+        }
+
         var window = Application.Current?.Windows.FirstOrDefault();
         if (window != null)
         {
@@ -22,5 +28,16 @@ public static class AppNavigator
         var signInPage = new SignInPage();
         NavigationPage.SetHasNavigationBar(signInPage, false);
         window.Page = new NavigationPage(signInPage);
+    }
+
+    public static bool EnsureSignedIn()
+    {
+        if (AuthService.Instance.IsSignedIn)
+        {
+            return true;
+        }
+
+        ShowSignIn();
+        return false;
     }
 }

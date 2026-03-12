@@ -7,6 +7,17 @@ public partial class SignUpPage : ContentPage
         InitializeComponent();
     }
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (AuthService.Instance.HasRegisteredUser && !AuthService.Instance.IsSignedIn)
+        {
+            await DisplayAlertAsync("Sign up", "An account already exists. Please sign in.", "OK");
+            await Navigation.PopAsync();
+        }
+    }
+
     private async void OnSignUpClicked(object? sender, EventArgs e)
     {
         var userName = UserNameEntry.Text ?? string.Empty;

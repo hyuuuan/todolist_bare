@@ -26,6 +26,12 @@ public partial class EditToDoPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+
+        if (!AppNavigator.EnsureSignedIn())
+        {
+            return;
+        }
+
         LoadItem();
     }
 

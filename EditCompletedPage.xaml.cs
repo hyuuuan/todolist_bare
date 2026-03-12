@@ -26,6 +26,12 @@ public partial class EditCompletedPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+
+        if (!AppNavigator.EnsureSignedIn())
+        {
+            return;
+        }
+
         LoadItem();
     }
 
