@@ -11,7 +11,7 @@
                    FontSize="36"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
-                   TextColor="#C6C6C6" />
+                   TextColor="#565862" />
             <BoxView HeightRequest="1" BackgroundColor="#DCDCE0" />
         </VerticalStackLayout>
 
@@ -33,6 +33,7 @@
                                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                                     <Label Text="{Binding ItemName}"
                                            FontSize="16"
+                                           TextColor="#1C1C1E"
                                            VerticalOptions="Center"
                                            VerticalTextAlignment="Center"
                                            LineBreakMode="TailTruncation" />

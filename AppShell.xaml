@@ -7,6 +7,7 @@
     Shell.FlyoutBehavior="Disabled"
     Shell.TabBarBackgroundColor="#ECECEE"
     Shell.TabBarForegroundColor="#0B84FF"
+    Shell.TabBarTitleColor="#0B84FF"
     Shell.TabBarUnselectedColor="#A0A0A0"
     Title="To Do">
 
