@@ -4,7 +4,7 @@
         {
             "label": "build-ios",
             "type": "shell",
-            "command": "dotnet build -t:Run -f net10.0-ios ToDoMaui_Listview.csproj -p:_DeviceName=:v2:udid=48959757-21D4-4C39-B092-FBAB79466E7E",
+            "command": "dotnet clean ToDoMaui_Listview.csproj && dotnet build -f net10.0-ios ToDoMaui_Listview.csproj && dotnet build -t:Run -f net10.0-ios ToDoMaui_Listview.csproj -p:_DeviceName=:v2:udid=48959757-21D4-4C39-B092-FBAB79466E7E",
             "group": {
                 "kind": "build",
                 "isDefault": true
