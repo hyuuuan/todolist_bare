@@ -3,6 +3,7 @@ namespace ToDoMaui_Listview;
 public partial class ToDoPage : ContentPage
 {
     private readonly ToDoStore _store = ToDoStore.Instance;
+    private bool _isLoading;
 
     public ToDoPage()
     {
@@ -10,10 +11,15 @@ public partial class ToDoPage : ContentPage
         ToDoListView.ItemsSource = _store.ActiveItems;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        AppNavigator.EnsureSignedIn();
+        if (!AppNavigator.EnsureSignedIn())
+        {
+            return;
+        }
+
+        await LoadActiveItemsAsync();
     }
 
     private async void OnAddClicked(object? sender, EventArgs e)
@@ -34,7 +40,7 @@ public partial class ToDoPage : ContentPage
         }
     }
 
-    private void OnDeleteClicked(object? sender, EventArgs e)
+    private async void OnDeleteClicked(object? sender, EventArgs e)
     {
         if (sender is not Button button || !int.TryParse(button.ClassId, out var id))
         {
@@ -42,13 +48,19 @@ public partial class ToDoPage : ContentPage
         }
 
         var item = _store.ActiveItems.FirstOrDefault(x => x.ItemId == id);
-        if (item != null)
+        if (item == null)
         {
-            _store.DeleteItem(item);
+            return;
+        }
+
+        var (deleted, errorMessage) = await _store.DeleteItemAsync(item);
+        if (!deleted)
+        {
+            await DisplayAlertAsync("Tasks", errorMessage, "OK");
         }
     }
 
-    private void OnCompleteClicked(object? sender, EventArgs e)
+    private async void OnCompleteClicked(object? sender, EventArgs e)
     {
         if (sender is not Button button || !int.TryParse(button.ClassId, out var id))
         {
@@ -56,9 +68,37 @@ public partial class ToDoPage : ContentPage
         }
 
         var item = _store.ActiveItems.FirstOrDefault(x => x.ItemId == id);
-        if (item != null)
+        if (item == null)
         {
-            _store.MoveToCompleted(item);
+            return;
+        }
+
+        var (completed, errorMessage) = await _store.MoveToCompletedAsync(item);
+        if (!completed)
+        {
+            await DisplayAlertAsync("Tasks", errorMessage, "OK");
+        }
+    }
+
+    private async Task LoadActiveItemsAsync()
+    {
+        if (_isLoading)
+        {
+            return;
+        }
+
+        _isLoading = true;
+        try
+        {
+            var (loaded, errorMessage) = await _store.RefreshActiveAsync();
+            if (!loaded && !string.IsNullOrWhiteSpace(errorMessage))
+            {
+                await DisplayAlertAsync("Tasks", errorMessage, "OK");
+            }
+        }
+        finally
+        {
+            _isLoading = false;
         }
     }
 }

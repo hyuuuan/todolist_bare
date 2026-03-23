@@ -8,7 +8,7 @@ public class ToDoClass : INotifyPropertyChanged
     private int _itemId;
     private string _itemName = string.Empty;
     private string _itemDescription = string.Empty;
-    private string _status = "todo";
+    private string _status = "active";
     private int _userId;
 
     // Compatibility aliases for the original single-page implementation.

@@ -1,26 +1,20 @@
 namespace ToDoMaui_Listview;
 
 using System.Net.Mail;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.Maui.Storage;
 
 public sealed class AuthService
 {
-    private const string RegisteredNameKey = "auth_registered_name_v1";
-    private const string RegisteredEmailKey = "auth_registered_email_v1";
-    private const string RegisteredPasswordHashKey = "auth_registered_password_hash_v1";
-    private const string RegisteredPasswordSaltKey = "auth_registered_password_salt_v1";
-    private const string SignedInKey = "auth_signed_in_v1";
+    private const string SignedInKey = "auth_signed_in_v2";
+    private const string UserIdKey = "auth_user_id_v2";
+    private const string UserNameKey = "auth_user_name_v2";
+    private const string UserEmailKey = "auth_user_email_v2";
 
     private static readonly Lazy<AuthService> LazyService = new(() => new AuthService());
 
-    public static AuthService Instance => LazyService.Value;
+    private readonly ToDoApiClient _apiClient = ToDoApiClient.Instance;
 
-    private string _registeredName = string.Empty;
-    private string _registeredEmail = string.Empty;
-    private string _registeredPasswordHash = string.Empty;
-    private string _registeredPasswordSalt = string.Empty;
+    public static AuthService Instance => LazyService.Value;
 
     public int CurrentUserId { get; private set; }
 
@@ -30,99 +24,83 @@ public sealed class AuthService
 
     public bool IsSignedIn => CurrentUserId > 0;
 
-    public bool HasRegisteredUser => !string.IsNullOrWhiteSpace(_registeredEmail)
-                                     && !string.IsNullOrWhiteSpace(_registeredPasswordHash)
-                                     && !string.IsNullOrWhiteSpace(_registeredPasswordSalt);
-
     private AuthService()
     {
-        LoadRegisteredUser();
         RestoreSession();
     }
 
-    public bool SignIn(string email, string password)
-    {
-        return SignIn(email, password, out _);
-    }
-
-    public bool SignIn(string email, string password, out string errorMessage)
+    public async Task<(bool Success, string ErrorMessage)> SignInAsync(string email, string password)
     {
         var cleanEmail = (email ?? string.Empty).Trim();
         var cleanPassword = password ?? string.Empty;
 
-        if (!HasRegisteredUser)
-        {
-            errorMessage = "No account found. Please sign up first.";
-            return false;
-        }
-
         if (string.IsNullOrWhiteSpace(cleanEmail) || string.IsNullOrWhiteSpace(cleanPassword))
         {
-            errorMessage = "Please enter your email and password.";
-            return false;
+            return (false, "Please enter your email and password.");
         }
 
-        var emailMatches = string.Equals(cleanEmail, _registeredEmail, StringComparison.OrdinalIgnoreCase);
-        var passwordMatches = string.Equals(
-            HashPassword(cleanPassword, _registeredPasswordSalt),
-            _registeredPasswordHash,
-            StringComparison.Ordinal);
-
-        if (!emailMatches || !passwordMatches)
+        if (!IsValidEmail(cleanEmail))
         {
-            errorMessage = "Invalid email or password.";
-            return false;
+            return (false, "Please enter a valid email address.");
         }
 
-        SetSignedInUser();
-        errorMessage = string.Empty;
-        return true;
+        var response = await _apiClient.SignInAsync(cleanEmail, cleanPassword);
+        if (!response.Success || response.Data == null)
+        {
+            return (false, string.IsNullOrWhiteSpace(response.Message)
+                ? "Invalid email or password."
+                : response.Message);
+        }
+
+        SetSignedInUser(response.Data);
+        return (true, string.Empty);
     }
 
-    public bool SignUp(string userName, string email, string password, string confirmPassword, out string errorMessage)
+    public async Task<(bool Success, string ErrorMessage)> SignUpAsync(
+        string userName,
+        string email,
+        string password,
+        string confirmPassword)
     {
         var cleanName = (userName ?? string.Empty).Trim();
         var cleanEmail = (email ?? string.Empty).Trim();
 
-        if (HasRegisteredUser)
-        {
-            errorMessage = "An account already exists. Please sign in.";
-            return false;
-        }
-
         if (string.IsNullOrWhiteSpace(cleanName))
         {
-            errorMessage = "Please enter your name.";
-            return false;
+            return (false, "Please enter your name.");
         }
 
         if (string.IsNullOrWhiteSpace(cleanEmail) || !IsValidEmail(cleanEmail))
         {
-            errorMessage = "Please enter a valid email address.";
-            return false;
+            return (false, "Please enter a valid email address.");
         }
 
         if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
         {
-            errorMessage = "Password must be at least 6 characters.";
-            return false;
+            return (false, "Password must be at least 6 characters.");
         }
 
         if (password != confirmPassword)
         {
-            errorMessage = "Passwords do not match.";
-            return false;
+            return (false, "Passwords do not match.");
         }
 
-        _registeredName = cleanName;
-        _registeredEmail = cleanEmail;
-        _registeredPasswordSalt = CreateSalt();
-        _registeredPasswordHash = HashPassword(password, _registeredPasswordSalt);
-        SaveRegisteredUser();
+        var (firstName, lastName) = SplitName(cleanName);
+        var signUpResponse = await _apiClient.SignUpAsync(
+            firstName,
+            lastName,
+            cleanEmail,
+            password,
+            confirmPassword);
 
-        SetSignedInUser();
-        errorMessage = string.Empty;
-        return true;
+        if (!signUpResponse.Success)
+        {
+            return (false, string.IsNullOrWhiteSpace(signUpResponse.Message)
+                ? "Unable to create account."
+                : signUpResponse.Message);
+        }
+
+        return await SignInAsync(cleanEmail, password);
     }
 
     public void SignOut()
@@ -130,61 +108,79 @@ public sealed class AuthService
         CurrentUserId = 0;
         CurrentUserName = string.Empty;
         CurrentUserEmail = string.Empty;
+
         Preferences.Default.Set(SignedInKey, false);
-    }
+        Preferences.Default.Remove(UserIdKey);
+        Preferences.Default.Remove(UserNameKey);
+        Preferences.Default.Remove(UserEmailKey);
 
-    private void LoadRegisteredUser()
-    {
-        _registeredName = Preferences.Default.Get(RegisteredNameKey, string.Empty);
-        _registeredEmail = Preferences.Default.Get(RegisteredEmailKey, string.Empty);
-        _registeredPasswordHash = Preferences.Default.Get(RegisteredPasswordHashKey, string.Empty);
-        _registeredPasswordSalt = Preferences.Default.Get(RegisteredPasswordSaltKey, string.Empty);
-    }
-
-    private void SaveRegisteredUser()
-    {
-        Preferences.Default.Set(RegisteredNameKey, _registeredName);
-        Preferences.Default.Set(RegisteredEmailKey, _registeredEmail);
-        Preferences.Default.Set(RegisteredPasswordHashKey, _registeredPasswordHash);
-        Preferences.Default.Set(RegisteredPasswordSaltKey, _registeredPasswordSalt);
+        ToDoStore.Instance.Clear();
     }
 
     private void RestoreSession()
     {
-        if (!HasRegisteredUser)
+        var wasSignedIn = Preferences.Default.Get(SignedInKey, false);
+        if (!wasSignedIn)
         {
             SignOut();
             return;
         }
 
-        var wasSignedIn = Preferences.Default.Get(SignedInKey, false);
-        if (wasSignedIn)
+        CurrentUserId = Preferences.Default.Get(UserIdKey, 0);
+        CurrentUserName = Preferences.Default.Get(UserNameKey, string.Empty);
+        CurrentUserEmail = Preferences.Default.Get(UserEmailKey, string.Empty);
+
+        if (CurrentUserId <= 0 || string.IsNullOrWhiteSpace(CurrentUserEmail))
         {
-            SetSignedInUser();
+            SignOut();
         }
     }
 
-    private void SetSignedInUser()
+    private void SetSignedInUser(ApiUser user)
     {
-        CurrentUserId = 1;
-        CurrentUserName = _registeredName;
-        CurrentUserEmail = _registeredEmail;
+        CurrentUserId = user.Id;
+        CurrentUserName = BuildDisplayName(user.FirstName, user.LastName);
+        CurrentUserEmail = user.Email;
+
         Preferences.Default.Set(SignedInKey, true);
+        Preferences.Default.Set(UserIdKey, CurrentUserId);
+        Preferences.Default.Set(UserNameKey, CurrentUserName);
+        Preferences.Default.Set(UserEmailKey, CurrentUserEmail);
     }
 
-    private static string CreateSalt()
+    private static string BuildDisplayName(string firstName, string lastName)
     {
-        Span<byte> saltBytes = stackalloc byte[16];
-        RandomNumberGenerator.Fill(saltBytes);
-        return Convert.ToBase64String(saltBytes);
+        var first = (firstName ?? string.Empty).Trim();
+        var last = (lastName ?? string.Empty).Trim();
+
+        if (string.IsNullOrWhiteSpace(first) && string.IsNullOrWhiteSpace(last))
+        {
+            return "User";
+        }
+
+        if (string.IsNullOrWhiteSpace(last))
+        {
+            return first;
+        }
+
+        return $"{first} {last}".Trim();
     }
 
-    private static string HashPassword(string password, string salt)
+    private static (string FirstName, string LastName) SplitName(string fullName)
     {
-        using var sha = SHA256.Create();
-        var inputBytes = Encoding.UTF8.GetBytes($"{salt}:{password}");
-        var hashBytes = sha.ComputeHash(inputBytes);
-        return Convert.ToBase64String(hashBytes);
+        var trimmedName = (fullName ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(trimmedName))
+        {
+            return ("User", string.Empty);
+        }
+
+        var parts = trimmedName.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
+        if (parts.Length == 1)
+        {
+            return (parts[0], string.Empty);
+        }
+
+        return (parts[0], parts[1]);
     }
 
     private static bool IsValidEmail(string email)

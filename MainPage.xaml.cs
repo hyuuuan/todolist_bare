@@ -1,48 +1,122 @@
-﻿using System.Collections.ObjectModel;
-
 namespace ToDoMaui_Listview;
 
 public partial class MainPage : ContentPage
 {
-    private ObservableCollection<ToDoClass> ToDoList = new ObservableCollection<ToDoClass>();
-    private ToDoClass? _selectedItem = null;
-    private int _nextId = 1;
+    private readonly ToDoStore _store = ToDoStore.Instance;
+    private ToDoClass? _selectedItem;
+    private bool _isSubmitting;
 
     public MainPage()
     {
         InitializeComponent();
-        todoLV.ItemsSource = ToDoList;
+        todoLV.ItemsSource = _store.ActiveItems;
     }
 
-    private void AddToDoItem(object? sender, EventArgs e)
+    protected override async void OnAppearing()
     {
-        string title  = titleEntry.Text?.Trim() ?? "";
-        string detail = detailsEditor.Text?.Trim() ?? "";
+        base.OnAppearing();
 
-        if (string.IsNullOrWhiteSpace(title)) return;
-
-        ToDoList.Add(new ToDoClass
+        if (!AppNavigator.EnsureSignedIn())
         {
-            id     = _nextId++,
-            title  = title,
-            detail = detail
-        });
+            return;
+        }
 
-        ClearInputs();
+        var (loaded, errorMessage) = await _store.RefreshActiveAsync();
+        if (!loaded && !string.IsNullOrWhiteSpace(errorMessage))
+        {
+            await DisplayAlertAsync("Tasks", errorMessage, "OK");
+        }
     }
 
-    private void EditToDoItem(object? sender, EventArgs e)
+    private async void AddToDoItem(object? sender, EventArgs e)
     {
-        if (_selectedItem == null) return;
+        if (_isSubmitting)
+        {
+            return;
+        }
 
-        string title = titleEntry.Text?.Trim() ?? "";
-        if (string.IsNullOrWhiteSpace(title)) return;
+        if (!AuthService.Instance.IsSignedIn)
+        {
+            AppNavigator.ShowSignIn();
+            return;
+        }
 
-        _selectedItem.title  = title;
-        _selectedItem.detail = detailsEditor.Text?.Trim() ?? "";
+        var title = titleEntry.Text?.Trim() ?? string.Empty;
+        var detail = detailsEditor.Text?.Trim() ?? string.Empty;
 
-        todoLV.SelectedItem = null;
-        CancelEditMode();
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            return;
+        }
+
+        _isSubmitting = true;
+        if (sender is Button button)
+        {
+            button.IsEnabled = false;
+        }
+
+        try
+        {
+            var (added, errorMessage) = await _store.AddItemAsync(title, detail, AuthService.Instance.CurrentUserId);
+            if (!added)
+            {
+                await DisplayAlertAsync("Tasks", errorMessage, "OK");
+                return;
+            }
+
+            ClearInputs();
+        }
+        finally
+        {
+            _isSubmitting = false;
+            if (sender is Button enabledButton)
+            {
+                enabledButton.IsEnabled = true;
+            }
+        }
+    }
+
+    private async void EditToDoItem(object? sender, EventArgs e)
+    {
+        if (_isSubmitting || _selectedItem == null)
+        {
+            return;
+        }
+
+        var title = titleEntry.Text?.Trim() ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            return;
+        }
+
+        var detail = detailsEditor.Text?.Trim() ?? string.Empty;
+
+        _isSubmitting = true;
+        if (sender is Button button)
+        {
+            button.IsEnabled = false;
+        }
+
+        try
+        {
+            var (updated, errorMessage) = await _store.UpdateItemAsync(_selectedItem, title, detail);
+            if (!updated)
+            {
+                await DisplayAlertAsync("Tasks", errorMessage, "OK");
+                return;
+            }
+
+            todoLV.SelectedItem = null;
+            CancelEditMode();
+        }
+        finally
+        {
+            _isSubmitting = false;
+            if (sender is Button enabledButton)
+            {
+                enabledButton.IsEnabled = true;
+            }
+        }
     }
 
     private void CancelEdit(object? sender, EventArgs e)
@@ -51,15 +125,21 @@ public partial class MainPage : ContentPage
         CancelEditMode();
     }
 
-    private void DeleteToDoItem(object? sender, EventArgs e)
+    private async void DeleteToDoItem(object? sender, EventArgs e)
     {
         if (sender is Button btn && int.TryParse(btn.ClassId, out int id))
         {
-            var item = ToDoList.FirstOrDefault(t => t.id == id);
+            var item = _store.ActiveItems.FirstOrDefault(t => t.ItemId == id);
             if (item != null)
             {
-                ToDoList.Remove(item);
-                if (_selectedItem?.id == id)
+                var (deleted, errorMessage) = await _store.DeleteItemAsync(item);
+                if (!deleted)
+                {
+                    await DisplayAlertAsync("Tasks", errorMessage, "OK");
+                    return;
+                }
+
+                if (_selectedItem?.ItemId == id)
                 {
                     todoLV.SelectedItem = null;
                     CancelEditMode();

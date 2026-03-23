@@ -9,13 +9,19 @@ public partial class ProfilePage : ContentPage
         InitializeComponent();
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
 
         if (!AppNavigator.EnsureSignedIn())
         {
             return;
+        }
+
+        var (loaded, errorMessage) = await _store.RefreshAllAsync();
+        if (!loaded && !string.IsNullOrWhiteSpace(errorMessage))
+        {
+            await DisplayAlertAsync("Profile", errorMessage, "OK");
         }
 
         var auth = AuthService.Instance;
