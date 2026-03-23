@@ -27,13 +27,25 @@
 
             <Border Style="{StaticResource AppCardBorderStyle}">
                 <VerticalStackLayout Spacing="12">
-                    <Label Text="User Name"
+                    <Label Text="First Name"
                            FontFamily="OpenSansSemibold"
                            FontSize="13"
                            TextColor="{StaticResource AppTextPrimary}" />
                     <Border Style="{StaticResource InputBorderStyle}">
-                        <Entry x:Name="UserNameEntry"
-                               Placeholder="What should we call you?"
+                        <Entry x:Name="FirstNameEntry"
+                               Placeholder="First name"
+                               Style="{StaticResource InputEntryStyle}"
+                               Keyboard="Text"
+                               ReturnType="Next" />
+                    </Border>
+
+                    <Label Text="Last Name"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="13"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Border Style="{StaticResource InputBorderStyle}">
+                        <Entry x:Name="LastNameEntry"
+                               Placeholder="Last name"
                                Style="{StaticResource InputEntryStyle}"
                                Keyboard="Text"
                                ReturnType="Next" />

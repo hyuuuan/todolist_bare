@@ -24,13 +24,15 @@ public partial class SignUpPage : ContentPage
 
         try
         {
-            var userName = UserNameEntry.Text ?? string.Empty;
+            var firstName = FirstNameEntry.Text ?? string.Empty;
+            var lastName = LastNameEntry.Text ?? string.Empty;
             var email = EmailEntry.Text ?? string.Empty;
             var password = PasswordEntry.Text ?? string.Empty;
             var confirmPassword = ConfirmPasswordEntry.Text ?? string.Empty;
 
             var (signedUp, errorMessage) = await AuthService.Instance.SignUpAsync(
-                userName,
+                firstName,
+                lastName,
                 email,
                 password,
                 confirmPassword);

@@ -57,17 +57,24 @@ public sealed class AuthService
     }
 
     public async Task<(bool Success, string ErrorMessage)> SignUpAsync(
-        string userName,
+        string firstName,
+        string lastName,
         string email,
         string password,
         string confirmPassword)
     {
-        var cleanName = (userName ?? string.Empty).Trim();
+        var cleanFirstName = (firstName ?? string.Empty).Trim();
+        var cleanLastName = (lastName ?? string.Empty).Trim();
         var cleanEmail = (email ?? string.Empty).Trim();
 
-        if (string.IsNullOrWhiteSpace(cleanName))
+        if (string.IsNullOrWhiteSpace(cleanFirstName))
         {
-            return (false, "Please enter your name.");
+            return (false, "Please enter your first name.");
+        }
+
+        if (string.IsNullOrWhiteSpace(cleanLastName))
+        {
+            return (false, "Please enter your last name.");
         }
 
         if (string.IsNullOrWhiteSpace(cleanEmail) || !IsValidEmail(cleanEmail))
@@ -85,10 +92,9 @@ public sealed class AuthService
             return (false, "Passwords do not match.");
         }
 
-        var (firstName, lastName) = SplitName(cleanName);
         var signUpResponse = await _apiClient.SignUpAsync(
-            firstName,
-            lastName,
+            cleanFirstName,
+            cleanLastName,
             cleanEmail,
             password,
             confirmPassword);
@@ -164,23 +170,6 @@ public sealed class AuthService
         }
 
         return $"{first} {last}".Trim();
-    }
-
-    private static (string FirstName, string LastName) SplitName(string fullName)
-    {
-        var trimmedName = (fullName ?? string.Empty).Trim();
-        if (string.IsNullOrWhiteSpace(trimmedName))
-        {
-            return ("User", string.Empty);
-        }
-
-        var parts = trimmedName.Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
-        if (parts.Length == 1)
-        {
-            return (parts[0], string.Empty);
-        }
-
-        return (parts[0], parts[1]);
     }
 
     private static bool IsValidEmail(string email)
