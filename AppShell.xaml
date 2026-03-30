@@ -6,10 +6,11 @@
     xmlns:local="clr-namespace:ToDoMaui_Listview"
     Shell.FlyoutBehavior="Disabled"
     Shell.BackgroundColor="{StaticResource AppSurface}"
-    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarBackgroundColor="{StaticResource AppCard}"
     Shell.TabBarForegroundColor="{StaticResource AppBrand}"
     Shell.TabBarTitleColor="{StaticResource AppBrand}"
     Shell.TabBarUnselectedColor="{StaticResource AppTextSecondary}"
+    Shell.NavBarHasShadow="False"
     Title="To Do">
 
     <TabBar>

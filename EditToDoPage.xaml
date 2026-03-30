@@ -16,10 +16,12 @@
         <VerticalStackLayout Padding="20,18,20,24" Spacing="14">
             <Border Style="{StaticResource AppCardBorderStyle}">
                 <VerticalStackLayout Spacing="4">
+                    <Label Text="TASK DETAILS"
+                           Style="{StaticResource SectionLabelStyle}" />
                     <Label Text="Edit Task"
                            Style="{StaticResource PageHeadingStyle}"
-                           FontSize="26" />
-                    <Label Text="Update details, mark completion, or remove this task."
+                           FontSize="27" />
+                    <Label Text="Update details, complete the task, or remove it from your list."
                            Style="{StaticResource PageSubheadingStyle}" />
                 </VerticalStackLayout>
             </Border>
@@ -49,7 +51,7 @@
                                 Keyboard="Text" />
                     </Border>
 
-                    <Button Text="Update"
+                    <Button Text="Save Changes"
                             Style="{StaticResource PrimaryActionButtonStyle}"
                             Margin="0,4,0,0"
                             Clicked="OnUpdateClicked" />

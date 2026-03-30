@@ -18,25 +18,27 @@
                              Padding="20,20,20,12"
                              Spacing="12">
             <Border Style="{StaticResource AppCardBorderStyle}">
-                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="2">
+                <Grid ColumnDefinitions="*,Auto"
+                      RowDefinitions="Auto,Auto"
+                      ColumnSpacing="12"
+                      RowSpacing="2">
                     <Label Grid.Row="0"
                            Grid.Column="0"
-                           Text="Today Focus"
+                           Text="Active Tasks"
                            Style="{StaticResource PageHeadingStyle}"
                            FontSize="30" />
 
                     <Label Grid.Row="1"
                            Grid.Column="0"
-                           Text="Keep momentum by clearing high-priority tasks first."
+                           Text="Focus on high-value work first, then clear smaller tasks."
                            Style="{StaticResource PageSubheadingStyle}" />
 
                     <Border Grid.Row="0"
                             Grid.RowSpan="2"
                             Grid.Column="1"
-                            Padding="14,10"
+                            Style="{StaticResource PillBadgeBorderStyle}"
                             BackgroundColor="{StaticResource AppBrandSoft}"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 14"
+                            Stroke="{StaticResource AppBrandSoftBorder}"
                             HorizontalOptions="End"
                             VerticalOptions="Center">
                         <VerticalStackLayout Spacing="0">
@@ -57,93 +59,118 @@
         </VerticalStackLayout>
 
         <Grid Grid.Row="1">
-            <ListView x:Name="ToDoListView"
-                      Margin="20,0,20,0"
-                      HasUnevenRows="True"
-                      SeparatorVisibility="None"
-                      BackgroundColor="Transparent"
-                      ItemTapped="OnItemTapped">
-                <ListView.ItemTemplate>
+            <CollectionView x:Name="ToDoListView"
+                            Margin="20,0,20,0"
+                            BackgroundColor="Transparent"
+                            SelectionMode="Single"
+                            SelectionChanged="OnItemTapped">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <Border Margin="0,0,0,12"
-                                    Padding="12"
-                                    BackgroundColor="{StaticResource AppCard}"
-                                    Stroke="{StaticResource AppCardBorder}"
-                                    StrokeThickness="1"
-                                    StrokeShape="RoundRectangle 14">
-                                <Grid ColumnDefinitions="*,Auto,Auto"
-                                      RowDefinitions="Auto,Auto"
-                                      ColumnSpacing="8"
-                                      RowSpacing="4">
-                                    <Label Grid.Row="0"
-                                           Grid.Column="0"
-                                           Text="{Binding ItemName}"
-                                           FontFamily="OpenSansSemibold"
-                                           FontSize="16"
-                                           TextColor="{StaticResource AppTextPrimary}"
-                                           LineBreakMode="TailTruncation" />
+                        <Border Margin="0,0,0,12"
+                                Padding="14"
+                                BackgroundColor="{StaticResource AppCard}"
+                                Stroke="{StaticResource AppCardBorder}"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 14">
+                            <Grid ColumnDefinitions="*,Auto"
+                                  RowDefinitions="Auto,Auto"
+                                  ColumnSpacing="10"
+                                  RowSpacing="4">
+                                <Label Grid.Row="0"
+                                       Grid.Column="0"
+                                       Text="{Binding ItemName}"
+                                       FontFamily="OpenSansSemibold"
+                                       FontSize="16"
+                                       TextColor="{StaticResource AppTextPrimary}"
+                                       LineBreakMode="TailTruncation" />
 
-                                    <Button Grid.Row="0"
-                                            Grid.RowSpan="2"
-                                            Grid.Column="1"
-                                            Text="X"
-                                            WidthRequest="36"
-                                            HeightRequest="36"
+                                <VerticalStackLayout Grid.Row="0"
+                                                     Grid.RowSpan="2"
+                                                     Grid.Column="1"
+                                                     Spacing="6"
+                                                     VerticalOptions="Center">
+                                    <Button Text="Done"
+                                            WidthRequest="72"
+                                            HeightRequest="34"
                                             CornerRadius="10"
                                             Padding="0"
                                             FontFamily="OpenSansSemibold"
-                                            FontSize="14"
-                                            BackgroundColor="{StaticResource AppDangerSoft}"
-                                            TextColor="{StaticResource AppDanger}"
-                                            VerticalOptions="Center"
-                                            ClassId="{Binding ItemId}"
-                                            Clicked="OnDeleteClicked" />
-
-                                    <Button Grid.Row="0"
-                                            Grid.RowSpan="2"
-                                            Grid.Column="2"
-                                            Text="✓"
-                                            WidthRequest="36"
-                                            HeightRequest="36"
-                                            CornerRadius="10"
-                                            Padding="0"
-                                            FontFamily="OpenSansSemibold"
-                                            FontSize="16"
-                                            BackgroundColor="{StaticResource AppBrandSoft}"
-                                            TextColor="{StaticResource AppBrandDark}"
-                                            VerticalOptions="Center"
+                                            FontSize="12"
+                                            BackgroundColor="{StaticResource AppSuccessSoft}"
+                                            TextColor="{StaticResource AppSuccess}"
                                             ClassId="{Binding ItemId}"
                                             Clicked="OnCompleteClicked" />
 
-                                    <Label Grid.Row="1"
-                                           Grid.Column="0"
-                                           Grid.ColumnSpan="3"
-                                           Text="{Binding ItemDescription}"
-                                           FontFamily="OpenSansRegular"
-                                           FontSize="13"
-                                           TextColor="{StaticResource AppTextSecondary}"
-                                           MaxLines="2"
-                                           LineBreakMode="TailTruncation">
-                                        <Label.Triggers>
-                                            <DataTrigger TargetType="Label" Binding="{Binding ItemDescription}" Value="">
-                                                <Setter Property="Text" Value="No details yet" />
-                                            </DataTrigger>
-                                        </Label.Triggers>
-                                    </Label>
-                                </Grid>
-                            </Border>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                                    <Button Text="Delete"
+                                            WidthRequest="72"
+                                            HeightRequest="34"
+                                            CornerRadius="10"
+                                            Padding="0"
+                                            FontFamily="OpenSansSemibold"
+                                            FontSize="12"
+                                            BackgroundColor="{StaticResource AppDangerSoft}"
+                                            TextColor="{StaticResource AppDanger}"
+                                            ClassId="{Binding ItemId}"
+                                            Clicked="OnDeleteClicked" />
+                                </VerticalStackLayout>
 
-                <ListView.Footer>
-                    <Grid HeightRequest="96" BackgroundColor="Transparent" />
-                </ListView.Footer>
-            </ListView>
+                                <Label Grid.Row="1"
+                                       Grid.Column="0"
+                                       Text="{Binding ItemDescription}"
+                                       FontFamily="OpenSansRegular"
+                                       FontSize="13"
+                                       TextColor="{StaticResource AppTextSecondary}"
+                                       MaxLines="2"
+                                       LineBreakMode="TailTruncation">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ItemDescription}" Value="">
+                                            <Setter Property="Text" Value="No details added" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.Footer>
+                    <Grid HeightRequest="98" BackgroundColor="Transparent" />
+                </CollectionView.Footer>
+            </CollectionView>
+
+            <Border Margin="26,70,26,0"
+                    Padding="22,18"
+                    BackgroundColor="{StaticResource AppCard}"
+                    Stroke="{StaticResource AppCardBorder}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16"
+                    VerticalOptions="Center"
+                    IsVisible="False"
+                    InputTransparent="True">
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border"
+                                 Binding="{Binding Source={x:Reference ToDoListView}, Path=ItemsSource.Count}"
+                                 Value="0">
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                </Border.Triggers>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="No active tasks"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="18"
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Label Text="Tap New Task to add your first priority for today."
+                           FontFamily="OpenSansRegular"
+                           FontSize="13"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{StaticResource AppTextSecondary}" />
+                </VerticalStackLayout>
+            </Border>
 
             <Button Text="+ New Task"
-                    WidthRequest="150"
+                    WidthRequest="154"
                     HeightRequest="52"
                     CornerRadius="16"
                     HorizontalOptions="Center"

@@ -7,21 +7,21 @@
              Title="Sign Up">
 
     <ContentPage.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0.9,1">
             <GradientStop Color="{StaticResource AppSurface}" Offset="0.0" />
-            <GradientStop Color="{StaticResource AppSurfaceAlt}" Offset="0.55" />
-            <GradientStop Color="{StaticResource AppBrandSoft}" Offset="1.0" />
+            <GradientStop Color="{StaticResource AppSurfaceAlt}" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
 
     <ScrollView>
-        <VerticalStackLayout Padding="24,42,24,28" Spacing="16">
-            <VerticalStackLayout Spacing="2">
-                <Label Text="Create Account"
-                       FontFamily="OpenSansSemibold"
-                       FontSize="31"
-                       TextColor="{StaticResource AppTextPrimary}" />
-                <Label Text="Start organizing your tasks in one clean workspace."
+        <VerticalStackLayout Padding="24,42,24,30" Spacing="16">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="NEW ACCOUNT"
+                       Style="{StaticResource SectionLabelStyle}" />
+                <Label Text="Create your workspace"
+                       Style="{StaticResource PageHeadingStyle}"
+                       FontSize="31" />
+                <Label Text="Set up your account and keep all tasks in one reliable place."
                        Style="{StaticResource PageSubheadingStyle}" />
             </VerticalStackLayout>
 

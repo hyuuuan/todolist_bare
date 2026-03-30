@@ -22,16 +22,16 @@ public partial class CompletedPage : ContentPage
         await LoadCompletedItemsAsync();
     }
 
-    private async void OnItemTapped(object? sender, ItemTappedEventArgs e)
+    private async void OnItemTapped(object? sender, SelectionChangedEventArgs e)
     {
-        if (e.Item is ToDoClass item)
+        if (e.CurrentSelection.FirstOrDefault() is ToDoClass item)
         {
             await Shell.Current.GoToAsync($"{nameof(EditCompletedPage)}?itemId={item.ItemId}");
         }
 
-        if (sender is ListView listView)
+        if (sender is CollectionView collectionView)
         {
-            listView.SelectedItem = null;
+            collectionView.SelectedItem = null;
         }
     }
 

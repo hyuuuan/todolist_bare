@@ -148,9 +148,9 @@ public partial class MainPage : ContentPage
         }
     }
 
-    private void TodoLV_OnItemSelected(object? sender, SelectedItemChangedEventArgs e)
+    private void TodoLV_OnItemSelected(object? sender, SelectionChangedEventArgs e)
     {
-        if (e.SelectedItem is ToDoClass item)
+        if (e.CurrentSelection.FirstOrDefault() is ToDoClass item)
         {
             _selectedItem      = item;
             titleEntry.Text    = item.title;
@@ -159,11 +159,6 @@ public partial class MainPage : ContentPage
         }
         // Clear the selection immediately so iOS doesn't show the checkmark
         todoLV.SelectedItem = null;
-    }
-
-    private void todoLV_ItemTapped(object? sender, ItemTappedEventArgs e)
-    {
-        // Selection is handled by ItemSelected
     }
 
     // ── Helpers ──────────────────────────────────────────────

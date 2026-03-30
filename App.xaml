@@ -1,4 +1,4 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ToDoMaui_Listview"
@@ -10,24 +10,36 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Color x:Key="AppSurface">#FFF8FB</Color>
-            <Color x:Key="AppSurfaceAlt">#FFEFF5</Color>
+            <Color x:Key="AppSurface">#F3F6FB</Color>
+            <Color x:Key="AppSurfaceAlt">#E7EEF8</Color>
             <Color x:Key="AppCard">#FFFFFF</Color>
-            <Color x:Key="AppCardBorder">#F3D6E2</Color>
-            <Color x:Key="AppTextPrimary">#2C1230</Color>
-            <Color x:Key="AppTextSecondary">#8A5A6B</Color>
-            <Color x:Key="AppBrand">#FF0856</Color>
-            <Color x:Key="AppBrandDark">#CC0042</Color>
-            <Color x:Key="AppBrandSoft">#FFE3ED</Color>
-            <Color x:Key="AppSuccess">#2C9B62</Color>
-            <Color x:Key="AppSuccessSoft">#E4F4EA</Color>
-            <Color x:Key="AppDanger">#CF315D</Color>
-            <Color x:Key="AppDangerSoft">#FFE9F0</Color>
-            <Color x:Key="AppNeutralSoft">#FFF0F5</Color>
+            <Color x:Key="AppCardBorder">#D4DEEC</Color>
+            <Color x:Key="AppInputSurface">#F9FBFF</Color>
+            <Color x:Key="AppInputBorder">#CCD8EA</Color>
+
+            <Color x:Key="AppTextPrimary">#13233A</Color>
+            <Color x:Key="AppTextSecondary">#63748D</Color>
+            <Color x:Key="AppTextMuted">#8493A7</Color>
+
+            <Color x:Key="AppBrand">#295FB7</Color>
+            <Color x:Key="AppBrandDark">#1D4A94</Color>
+            <Color x:Key="AppBrandSoft">#E8F0FF</Color>
+            <Color x:Key="AppBrandSoftBorder">#C3D6FF</Color>
+
+            <Color x:Key="AppSuccess">#2E7D52</Color>
+            <Color x:Key="AppSuccessSoft">#E7F4EC</Color>
+            <Color x:Key="AppSuccessSoftBorder">#C5E5D1</Color>
+
+            <Color x:Key="AppDanger">#BC3A4D</Color>
+            <Color x:Key="AppDangerSoft">#FDECEF</Color>
+            <Color x:Key="AppDangerSoftBorder">#F7C9D1</Color>
+
+            <Color x:Key="AppNeutralSoft">#EDF2F8</Color>
+            <Color x:Key="AppNeutralBorder">#D4DEEC</Color>
 
             <Style x:Key="PageHeadingStyle" TargetType="Label">
                 <Setter Property="FontFamily" Value="OpenSansSemibold" />
-                <Setter Property="FontSize" Value="28" />
+                <Setter Property="FontSize" Value="30" />
                 <Setter Property="TextColor" Value="{StaticResource AppTextPrimary}" />
                 <Setter Property="LineBreakMode" Value="TailTruncation" />
             </Style>
@@ -36,6 +48,14 @@
                 <Setter Property="FontFamily" Value="OpenSansRegular" />
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="TextColor" Value="{StaticResource AppTextSecondary}" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+            </Style>
+
+            <Style x:Key="SectionLabelStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="CharacterSpacing" Value="1.2" />
+                <Setter Property="TextColor" Value="{StaticResource AppTextMuted}" />
             </Style>
 
             <Style x:Key="AppCardBorderStyle" TargetType="Border">
@@ -47,16 +67,16 @@
             </Style>
 
             <Style x:Key="InputBorderStyle" TargetType="Border">
-                <Setter Property="BackgroundColor" Value="#FFF6FA" />
-                <Setter Property="Stroke" Value="{StaticResource AppCardBorder}" />
-                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="BackgroundColor" Value="{StaticResource AppInputSurface}" />
+                <Setter Property="Stroke" Value="{StaticResource AppInputBorder}" />
+                <Setter Property="StrokeThickness" Value="1" />
                 <Setter Property="StrokeShape" Value="RoundRectangle 14" />
                 <Setter Property="Padding" Value="14,0" />
             </Style>
 
             <Style x:Key="InputEntryStyle" TargetType="Entry">
                 <Setter Property="TextColor" Value="{StaticResource AppTextPrimary}" />
-                <Setter Property="PlaceholderColor" Value="#B57A90" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource AppTextMuted}" />
                 <Setter Property="FontFamily" Value="OpenSansRegular" />
                 <Setter Property="FontSize" Value="15" />
                 <Setter Property="HeightRequest" Value="50" />
@@ -65,7 +85,7 @@
 
             <Style x:Key="InputEditorStyle" TargetType="Editor">
                 <Setter Property="TextColor" Value="{StaticResource AppTextPrimary}" />
-                <Setter Property="PlaceholderColor" Value="#B57A90" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource AppTextMuted}" />
                 <Setter Property="FontFamily" Value="OpenSansRegular" />
                 <Setter Property="FontSize" Value="15" />
                 <Setter Property="AutoSize" Value="TextChanges" />
@@ -98,6 +118,12 @@
             <Style x:Key="DangerActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonBaseStyle}">
                 <Setter Property="BackgroundColor" Value="{StaticResource AppDangerSoft}" />
                 <Setter Property="TextColor" Value="{StaticResource AppDanger}" />
+            </Style>
+
+            <Style x:Key="PillBadgeBorderStyle" TargetType="Border">
+                <Setter Property="Padding" Value="12,8" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

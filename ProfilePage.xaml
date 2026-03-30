@@ -9,8 +9,7 @@
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="{StaticResource AppSurface}" Offset="0.0" />
-            <GradientStop Color="{StaticResource AppSurfaceAlt}" Offset="0.7" />
-            <GradientStop Color="{StaticResource AppBrandSoft}" Offset="1.0" />
+            <GradientStop Color="{StaticResource AppSurfaceAlt}" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
 
@@ -18,22 +17,21 @@
         <VerticalStackLayout Padding="20,20,20,28" Spacing="14">
             <Border Style="{StaticResource AppCardBorderStyle}">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
-                    <Border WidthRequest="76"
-                            HeightRequest="76"
-                            StrokeThickness="0"
+                    <Border WidthRequest="74"
+                            HeightRequest="74"
+                            StrokeThickness="1"
+                            Stroke="{StaticResource AppBrandSoftBorder}"
                             BackgroundColor="{StaticResource AppBrandSoft}"
-                            StrokeShape="RoundRectangle 38"
-                            VerticalOptions="Center">
+                            StrokeShape="RoundRectangle 37"
+                            VerticalOptions="Center"
+                            Padding="8">
                         <Image Source="dotnet_bot.png"
-                               Aspect="AspectFill"
-                               Margin="6" />
+                               Aspect="AspectFit" />
                     </Border>
 
                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                        <Label Text="Account"
-                               FontFamily="OpenSansRegular"
-                               FontSize="12"
-                               TextColor="{StaticResource AppTextSecondary}" />
+                        <Label Text="ACCOUNT"
+                               Style="{StaticResource SectionLabelStyle}" />
                         <Label x:Name="NameLabel"
                                Text="User"
                                FontFamily="OpenSansSemibold"
@@ -53,7 +51,8 @@
             <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                 <Border Grid.Column="0"
                         Style="{StaticResource AppCardBorderStyle}"
-                        BackgroundColor="{StaticResource AppBrandSoft}">
+                        BackgroundColor="{StaticResource AppBrandSoft}"
+                        Stroke="{StaticResource AppBrandSoftBorder}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="Open"
                                FontFamily="OpenSansRegular"
@@ -69,7 +68,8 @@
 
                 <Border Grid.Column="1"
                         Style="{StaticResource AppCardBorderStyle}"
-                        BackgroundColor="{StaticResource AppSuccessSoft}">
+                        BackgroundColor="{StaticResource AppSuccessSoft}"
+                        Stroke="{StaticResource AppSuccessSoftBorder}">
                     <VerticalStackLayout Spacing="4">
                         <Label Text="Completed"
                                FontFamily="OpenSansRegular"
@@ -89,7 +89,7 @@
                     <Label Text="Session"
                            Style="{StaticResource PageHeadingStyle}"
                            FontSize="20" />
-                    <Label Text="Use sign out if you are on a shared device to keep your task list private."
+                    <Label Text="Sign out on shared devices to keep your tasks and account data private."
                            Style="{StaticResource PageSubheadingStyle}" />
                     <Button Text="Sign out"
                             Style="{StaticResource DangerActionButtonStyle}"

@@ -16,10 +16,12 @@
         <VerticalStackLayout Padding="20,18,20,24" Spacing="14">
             <Border Style="{StaticResource AppCardBorderStyle}">
                 <VerticalStackLayout Spacing="4">
-                    <Label Text="Add New Task"
+                    <Label Text="NEW TASK"
+                           Style="{StaticResource SectionLabelStyle}" />
+                    <Label Text="Add Task"
                            Style="{StaticResource PageHeadingStyle}"
-                           FontSize="26" />
-                    <Label Text="Capture the title and a short description to keep your day organized."
+                           FontSize="27" />
+                    <Label Text="Capture a clear title and a short description so execution stays focused."
                            Style="{StaticResource PageSubheadingStyle}" />
                 </VerticalStackLayout>
             </Border>

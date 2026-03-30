@@ -7,44 +7,49 @@
              Title="Sign In">
 
     <ContentPage.Background>
-        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0.9,1">
             <GradientStop Color="{StaticResource AppSurface}" Offset="0.0" />
-            <GradientStop Color="{StaticResource AppSurfaceAlt}" Offset="0.55" />
-            <GradientStop Color="{StaticResource AppBrandSoft}" Offset="1.0" />
+            <GradientStop Color="{StaticResource AppSurfaceAlt}" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
 
     <ScrollView>
-        <VerticalStackLayout Padding="24,54,24,28" Spacing="16">
-            <VerticalStackLayout Spacing="2">
-                <Label Text="TaskFlow"
-                       FontFamily="OpenSansSemibold"
-                       FontSize="34"
-                       TextColor="{StaticResource AppTextPrimary}" />
-                <Label Text="Sign in to continue planning your day."
+        <VerticalStackLayout Padding="24,56,24,30" Spacing="16">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="TASKFLOW"
+                       Style="{StaticResource SectionLabelStyle}" />
+                <Label Text="Welcome back"
+                       Style="{StaticResource PageHeadingStyle}"
+                       FontSize="34" />
+                <Label Text="Sign in to review priorities and keep your day moving."
                        Style="{StaticResource PageSubheadingStyle}" />
             </VerticalStackLayout>
 
             <Border Style="{StaticResource AppCardBorderStyle}"
-                    StrokeThickness="0"
-                    BackgroundColor="{StaticResource AppBrandSoft}">
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" VerticalOptions="Center">
-                    <Border WidthRequest="54"
-                            HeightRequest="54"
+                    BackgroundColor="{StaticResource AppBrandSoft}"
+                    Stroke="{StaticResource AppBrandSoftBorder}"
+                    Padding="14">
+                <Grid ColumnDefinitions="Auto,*"
+                      ColumnSpacing="12"
+                      VerticalOptions="Center">
+                    <Border WidthRequest="52"
+                            HeightRequest="52"
+                            BackgroundColor="White"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 27"
-                            BackgroundColor="White">
+                            StrokeShape="RoundRectangle 26"
+                            Padding="8">
                         <Image Source="dotnet_bot.png"
-                               Margin="8"
                                Aspect="AspectFit" />
                     </Border>
 
-                    <VerticalStackLayout Grid.Column="1" Spacing="1" VerticalOptions="Center">
-                        <Label Text="Welcome back"
+                    <VerticalStackLayout Grid.Column="1"
+                                         VerticalOptions="Center"
+                                         Spacing="2">
+                        <Label Text="Account synced"
                                FontFamily="OpenSansSemibold"
-                               FontSize="16"
+                               FontSize="15"
                                TextColor="{StaticResource AppBrandDark}" />
-                        <Label Text="Your tasks are synced to this account."
+                        <Label Text="Your active and completed tasks stay connected to this account."
                                FontFamily="OpenSansRegular"
                                FontSize="12"
                                TextColor="{StaticResource AppTextSecondary}" />

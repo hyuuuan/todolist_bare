@@ -23,16 +23,15 @@
 
                 <Label Grid.Row="1"
                        Grid.Column="0"
-                       Text="Your finished tasks stay here for quick review."
+                       Text="Finished tasks stay here so you can review output and progress."
                        Style="{StaticResource PageSubheadingStyle}" />
 
                 <Border Grid.Row="0"
                         Grid.RowSpan="2"
                         Grid.Column="1"
-                        Padding="14,10"
+                        Style="{StaticResource PillBadgeBorderStyle}"
                         BackgroundColor="{StaticResource AppSuccessSoft}"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 14"
+                        Stroke="{StaticResource AppSuccessSoftBorder}"
                         HorizontalOptions="End"
                         VerticalOptions="Center">
                     <VerticalStackLayout Spacing="0">
@@ -51,25 +50,22 @@
             </Grid>
         </Border>
 
-        <ListView x:Name="CompletedListView"
-                  Grid.Row="1"
-                  Margin="0,0,0,0"
-                  HasUnevenRows="True"
-                  SeparatorVisibility="None"
-                  BackgroundColor="Transparent"
-                  ItemTapped="OnItemTapped">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
+        <Grid Grid.Row="1">
+            <CollectionView x:Name="CompletedListView"
+                            BackgroundColor="Transparent"
+                            SelectionMode="Single"
+                            SelectionChanged="OnItemTapped">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
                         <Border Margin="0,0,0,12"
-                                Padding="12"
+                                Padding="14"
                                 BackgroundColor="{StaticResource AppCard}"
                                 Stroke="{StaticResource AppCardBorder}"
                                 StrokeThickness="1"
                                 StrokeShape="RoundRectangle 14">
                             <Grid ColumnDefinitions="Auto,*,Auto"
                                   RowDefinitions="Auto,Auto"
-                                  ColumnSpacing="8"
+                                  ColumnSpacing="10"
                                   RowSpacing="4">
                                 <Border Grid.Row="0"
                                         Grid.RowSpan="2"
@@ -92,13 +88,13 @@
                                 <Button Grid.Row="0"
                                         Grid.RowSpan="2"
                                         Grid.Column="2"
-                                        Text="X"
-                                        WidthRequest="36"
-                                        HeightRequest="36"
+                                        Text="Delete"
+                                        WidthRequest="72"
+                                        HeightRequest="34"
                                         CornerRadius="10"
                                         Padding="0"
                                         FontFamily="OpenSansSemibold"
-                                        FontSize="14"
+                                        FontSize="12"
                                         BackgroundColor="{StaticResource AppDangerSoft}"
                                         TextColor="{StaticResource AppDanger}"
                                         VerticalOptions="Center"
@@ -107,7 +103,6 @@
 
                                 <Label Grid.Row="1"
                                        Grid.Column="1"
-                                       Grid.ColumnSpan="2"
                                        Text="{Binding ItemDescription}"
                                        FontFamily="OpenSansRegular"
                                        FontSize="13"
@@ -116,15 +111,46 @@
                                        LineBreakMode="TailTruncation">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding ItemDescription}" Value="">
-                                            <Setter Property="Text" Value="Completed with no extra notes" />
+                                            <Setter Property="Text" Value="Completed with no additional notes" />
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
                             </Grid>
                         </Border>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Border Margin="26,70,26,0"
+                    Padding="22,18"
+                    BackgroundColor="{StaticResource AppCard}"
+                    Stroke="{StaticResource AppCardBorder}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 16"
+                    VerticalOptions="Center"
+                    IsVisible="False"
+                    InputTransparent="True">
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border"
+                                 Binding="{Binding Source={x:Reference CompletedListView}, Path=ItemsSource.Count}"
+                                 Value="0">
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                </Border.Triggers>
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="No completed tasks yet"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="18"
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource AppTextPrimary}" />
+                    <Label Text="When you finish tasks, they will appear here for quick review."
+                           FontFamily="OpenSansRegular"
+                           FontSize="13"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{StaticResource AppTextSecondary}" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
     </Grid>
 </ContentPage>
